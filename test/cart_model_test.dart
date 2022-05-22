@@ -17,8 +17,10 @@ void main() {
   Offer offer2 = OfferMultibuyNForN(
       offerUnits: 4, forUnits: 3, itemId: 2, originalUnitPrice: 65);
 
-  CartModel cart =
-      CartModel(currency: currency, availableOffers: [offer1, offer2]);
+  CartModel cart = CartModel(
+      currency: currency,
+      availableOffers: [offer1, offer2],
+      availableItems: [item1, item2]);
 
   test("Empty Cart", () {
     //Empty cart
@@ -65,19 +67,19 @@ void main() {
   test("Get Price or Item in Cart", () {
     //Adds second item
     cart.addItem(item2.itemId);
-    expect(cart.getPriceForItem(item2.itemId).finalAmount, 65);
+    expect(cart.getPriceForItem(itemId: item2.itemId).finalAmount, 65);
 
     cart.addItem(item2.itemId);
-    expect(cart.getPriceForItem(item2.itemId).finalAmount, 130);
+    expect(cart.getPriceForItem(itemId: item2.itemId).finalAmount, 130);
 
     cart.addItem(item2.itemId);
-    expect(cart.getPriceForItem(item2.itemId).finalAmount, 195);
+    expect(cart.getPriceForItem(itemId: item2.itemId).finalAmount, 195);
 
     cart.addItem(item2.itemId);
-    expect(cart.getPriceForItem(item2.itemId).finalAmount, 195);
+    expect(cart.getPriceForItem(itemId: item2.itemId).finalAmount, 195);
 
     cart.addItem(item2.itemId);
-    expect(cart.getPriceForItem(item2.itemId).finalAmount, 260);
+    expect(cart.getPriceForItem(itemId: item2.itemId).finalAmount, 260);
   });
 
   test("Get Total Price", () {

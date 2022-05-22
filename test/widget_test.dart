@@ -1,19 +1,36 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shopping_app/Core/Offers/offer.dart';
+import 'package:shopping_app/Core/Offers/offer_multibuy_fixed.dart';
+import 'package:shopping_app/Core/Offers/offer_multibuy_n_for_n.dart';
+import 'package:shopping_app/Core/currency.dart';
+import 'package:shopping_app/Models/cart_model.dart';
+import 'package:shopping_app/Models/item_model.dart';
 
 import 'package:shopping_app/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    Currency currency =
+        Currency(name: "GBP", symbolMajor: "£", symbolMinor: "p");
+
+    ItemModel item1 = ItemModel(itemId: 1, title: "Face Mask");
+    ItemModel item2 = ItemModel(itemId: 2, title: "Toilet Roll");
+
+    Offer offer1 = OfferMultibuyFixed(
+        offerUnits: 2, offerAmount: 400, itemId: 1, originalUnitPrice: 250);
+    Offer offer2 = OfferMultibuyNForN(
+        offerUnits: 4, forUnits: 3, itemId: 2, originalUnitPrice: 65);
+
+    CartModel cart = CartModel(
+        currency: currency,
+        availableOffers: [offer1, offer2],
+        availableItems: [item1, item2]);
+
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(
+      cart: cart,
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
