@@ -2,12 +2,12 @@ import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Enums/offer_type.dart';
 
 abstract class Offer {
-  final int offerId;
+  final int itemId;
   final OfferType offerType;
   final int originalUnitPrice;
 
   Offer(
-      {required this.offerId,
+      {required this.itemId,
       required this.offerType,
       required this.originalUnitPrice}) {
     if (originalUnitPrice < 0) {

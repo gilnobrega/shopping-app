@@ -9,10 +9,10 @@ class OfferMultibuyFixed extends Offer {
   OfferMultibuyFixed(
       {required this.offerUnits,
       required this.offerAmount,
-      required int offerId,
+      required int itemId,
       required int originalUnitPrice})
       : super(
-            offerId: offerId,
+            itemId: itemId,
             offerType: OfferType.multiBuyFixed,
             originalUnitPrice: originalUnitPrice) {
     if (offerAmount < 0) {

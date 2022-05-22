@@ -9,10 +9,10 @@ class OfferMultibuyNForN extends Offer {
   OfferMultibuyNForN(
       {required this.offerUnits,
       required this.forUnits,
-      required int offerId,
+      required int itemId,
       required int originalUnitPrice})
       : super(
-            offerId: offerId,
+            itemId: itemId,
             offerType: OfferType.multiBuyNForN,
             originalUnitPrice: originalUnitPrice);
 

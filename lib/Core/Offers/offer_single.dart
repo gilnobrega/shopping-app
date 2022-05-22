@@ -5,11 +5,11 @@ class OfferSingle extends Offer {
   final int discountedAmount;
 
   OfferSingle(
-      {required offerId,
+      {required int itemId,
       required this.discountedAmount,
       required int originalUnitPrice})
       : super(
-            offerId: offerId,
+            itemId: itemId,
             offerType: OfferType.single,
             originalUnitPrice: originalUnitPrice) {
     if (discountedAmount < 0) {

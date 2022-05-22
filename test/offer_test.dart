@@ -8,7 +8,7 @@ import 'package:shopping_app/Core/price.dart';
 
 void main() {
   test('Offer without discount', () {
-    Offer offer = OfferNone(offerId: 1, originalUnitPrice: 100);
+    Offer offer = OfferNone(itemId: 1, originalUnitPrice: 100);
 
     Price price1Item = offer.getPrice(itemCount: 1);
     Price priceNoItems = offer.getPrice(itemCount: 0);
@@ -23,7 +23,7 @@ void main() {
   });
   test('Offer with single discount', () {
     Offer offer =
-        OfferSingle(offerId: 1, discountedAmount: 50, originalUnitPrice: 110);
+        OfferSingle(itemId: 1, discountedAmount: 50, originalUnitPrice: 110);
 
     Price priceNoItems = offer.getPrice(itemCount: 0);
     Price price1Item = offer.getPrice(itemCount: 1);
@@ -49,7 +49,7 @@ void main() {
   //Three Face Masks for £2.50
   test('Offer with multibuy fixed discount', () {
     Offer offer = OfferMultibuyFixed(
-        offerId: 1, offerUnits: 3, offerAmount: 250, originalUnitPrice: 100);
+        itemId: 1, offerUnits: 3, offerAmount: 250, originalUnitPrice: 100);
 
     Price priceNoItems = offer.getPrice(itemCount: 0);
     Price price1Item = offer.getPrice(itemCount: 1);
@@ -87,7 +87,7 @@ void main() {
   //4 toiler paper rolls for the price of 3
   test('Offer with multibuy n for n discount', () {
     Offer offer = OfferMultibuyNForN(
-        offerId: 1, offerUnits: 4, forUnits: 3, originalUnitPrice: 65);
+        itemId: 1, offerUnits: 4, forUnits: 3, originalUnitPrice: 65);
 
     Price priceNoItems = offer.getPrice(itemCount: 0);
     Price price1Item = offer.getPrice(itemCount: 1);
@@ -129,19 +129,19 @@ void main() {
 
   test('Expect Exceptions on negative offers', () {
     //Negative original unit price
-    expect(() => OfferNone(offerId: 1, originalUnitPrice: -100),
+    expect(() => OfferNone(itemId: 1, originalUnitPrice: -100),
         throwsA(isA<Exception>()));
 
     //negative discounted amount
     expect(
         () => OfferSingle(
-            offerId: 1, discountedAmount: -50, originalUnitPrice: 110),
+            itemId: 1, discountedAmount: -50, originalUnitPrice: 110),
         throwsA(isA<Exception>()));
 
     //negative amount in multibuy
     expect(
         () => OfferMultibuyFixed(
-            offerId: 1,
+            itemId: 1,
             offerUnits: 3,
             offerAmount: -250,
             originalUnitPrice: 100),

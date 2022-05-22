@@ -2,9 +2,9 @@ import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Enums/offer_type.dart';
 
 class OfferNone extends Offer {
-  OfferNone({required offerId, required int originalUnitPrice})
+  OfferNone({required int itemId, required int originalUnitPrice})
       : super(
-            offerId: offerId,
+            itemId: itemId,
             offerType: OfferType.none,
             originalUnitPrice: originalUnitPrice);
 
