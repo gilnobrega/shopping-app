@@ -14,7 +14,11 @@ class OfferMultibuyFixed extends Offer {
       : super(
             offerId: offerId,
             offerType: OfferType.multiBuyFixed,
-            originalUnitPrice: originalUnitPrice);
+            originalUnitPrice: originalUnitPrice) {
+    if (offerAmount < 0) {
+      throw Exception("Offer amount $offerAmount cannot be negative");
+    }
+  }
 
   @override
   int calculateFinalPrice({int? itemCount}) {

@@ -9,7 +9,11 @@ abstract class Offer {
   Offer(
       {required this.offerId,
       required this.offerType,
-      required this.originalUnitPrice});
+      required this.originalUnitPrice}) {
+    if (originalUnitPrice < 0) {
+      throw Exception("Original price $originalUnitPrice cannot be negative");
+    }
+  }
 
   //Price before offer is applied
   int _calculateOriginalPrice({int? itemCount}) =>

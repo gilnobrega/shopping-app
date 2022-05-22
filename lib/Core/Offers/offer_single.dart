@@ -11,7 +11,11 @@ class OfferSingle extends Offer {
       : super(
             offerId: offerId,
             offerType: OfferType.single,
-            originalUnitPrice: originalUnitPrice);
+            originalUnitPrice: originalUnitPrice) {
+    if (discountedAmount < 0) {
+      throw Exception("Discounted amount $discountedAmount cannot be negative");
+    }
+  }
 
   @override
   int calculateFinalPrice({int? itemCount}) =>

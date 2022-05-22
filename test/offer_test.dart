@@ -126,4 +126,25 @@ void main() {
     expect(price5Items.discountedAmount, 65);
     expect(price5Items.finalAmount, 260);
   });
+
+  test('Expect Exceptions on negative offers', () {
+    //Negative original unit price
+    expect(() => OfferNone(offerId: 1, originalUnitPrice: -100),
+        throwsA(isA<Exception>()));
+
+    //negative discounted amount
+    expect(
+        () => OfferSingle(
+            offerId: 1, discountedAmount: -50, originalUnitPrice: 110),
+        throwsA(isA<Exception>()));
+
+    //negative amount in multibuy
+    expect(
+        () => OfferMultibuyFixed(
+            offerId: 1,
+            offerUnits: 3,
+            offerAmount: -250,
+            originalUnitPrice: 100),
+        throwsA(isA<Exception>()));
+  });
 }
