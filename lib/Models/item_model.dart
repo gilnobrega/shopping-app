@@ -4,12 +4,9 @@ class ItemModel {
   final String? description;
   final String? pictureUrl;
 
-  final int offerId;
-
   ItemModel(
       {required this.itemId,
       required this.title,
       this.description,
-      required this.offerId,
       this.pictureUrl});
 }

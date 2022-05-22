@@ -9,8 +9,8 @@ import 'package:shopping_app/Models/item_model.dart';
 void main() {
   Currency currency = Currency(name: "GBP", symbolMajor: "£", symbolMinor: "p");
 
-  ItemModel item1 = ItemModel(itemId: 1, title: "Face Mask", offerId: 1);
-  ItemModel item2 = ItemModel(itemId: 2, title: "Toilet Roll", offerId: 2);
+  ItemModel item1 = ItemModel(itemId: 1, title: "Face Mask");
+  ItemModel item2 = ItemModel(itemId: 2, title: "Toilet Roll");
 
   Offer offer1 = OfferMultibuyFixed(
       offerUnits: 2, offerAmount: 400, itemId: 1, originalUnitPrice: 250);
