@@ -9,5 +9,6 @@ class OfferNone extends Offer {
             originalUnitPrice: originalUnitPrice);
 
   @override
-  int calculateDiscount({int? itemCount, int? originalPrice}) => 0;
+  int calculateFinalPrice({int? itemCount}) =>
+      (itemCount ?? 0) * originalUnitPrice;
 }

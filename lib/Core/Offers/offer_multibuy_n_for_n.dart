@@ -26,9 +26,4 @@ class OfferMultibuyNForN extends Offer {
     return numberOfOffers * (forUnits * originalUnitPrice) +
         (itemsNotCoveredByOffer * originalUnitPrice);
   }
-
-  @override
-  int calculateDiscount({int? itemCount}) =>
-      calculateOriginalPrice(itemCount: itemCount) -
-      calculateFinalPrice(itemCount: itemCount);
 }

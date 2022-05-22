@@ -14,6 +14,6 @@ class OfferSingle extends Offer {
             originalUnitPrice: originalUnitPrice);
 
   @override
-  int calculateDiscount({int? itemCount}) =>
-      (itemCount ?? 0) * discountedAmount;
+  int calculateFinalPrice({int? itemCount}) =>
+      (itemCount ?? 0) * (originalUnitPrice - discountedAmount);
 }

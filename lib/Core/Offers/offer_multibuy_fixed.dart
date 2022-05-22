@@ -26,9 +26,4 @@ class OfferMultibuyFixed extends Offer {
     return numberOfOffers * offerAmount +
         (itemsNotCoveredByOffer * originalUnitPrice);
   }
-
-  @override
-  int calculateDiscount({int? itemCount}) =>
-      calculateOriginalPrice(itemCount: itemCount) -
-      calculateFinalPrice(itemCount: itemCount);
 }

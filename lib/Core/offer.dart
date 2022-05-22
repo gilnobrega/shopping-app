@@ -14,9 +14,9 @@ abstract class Offer {
   int calculateOriginalPrice({int? itemCount}) =>
       (itemCount ?? 0) * originalUnitPrice;
   //Discount
-  int calculateDiscount({int? itemCount});
-  //Price after offer is applied
-  int calculateFinalPrice({int? itemCount}) =>
+  int calculateDiscount({int? itemCount}) =>
       calculateOriginalPrice(itemCount: itemCount) -
-      calculateDiscount(itemCount: itemCount);
+      calculateFinalPrice(itemCount: itemCount);
+  //Price after offer is applied
+  int calculateFinalPrice({int? itemCount});
 }
