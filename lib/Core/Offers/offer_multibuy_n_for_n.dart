@@ -1,4 +1,4 @@
-import 'package:shopping_app/Core/offer.dart';
+import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Enums/offer_type.dart';
 
 //E.g.: 4 for 3

@@ -1,3 +1,4 @@
+import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Enums/offer_type.dart';
 
 abstract class Offer {
@@ -11,12 +12,12 @@ abstract class Offer {
       required this.originalUnitPrice});
 
   //Price before offer is applied
-  int calculateOriginalPrice({int? itemCount}) =>
+  int _calculateOriginalPrice({int? itemCount}) =>
       (itemCount ?? 0) * originalUnitPrice;
-  //Discount
-  int calculateDiscount({int? itemCount}) =>
-      calculateOriginalPrice(itemCount: itemCount) -
-      calculateFinalPrice(itemCount: itemCount);
   //Price after offer is applied
   int calculateFinalPrice({int? itemCount});
+
+  Price getPrice({int? itemCount}) => Price(
+      originalAmount: _calculateOriginalPrice(itemCount: itemCount),
+      finalAmount: calculateFinalPrice(itemCount: itemCount));
 }
