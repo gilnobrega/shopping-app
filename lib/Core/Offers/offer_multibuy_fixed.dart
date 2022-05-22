@@ -9,16 +9,26 @@ class OfferMultibuyFixed extends Offer {
   OfferMultibuyFixed(
       {required this.offerUnits,
       required this.offerAmount,
-      required int offerId})
-      : super(offerId: offerId, offerType: OfferType.multiBuyFixed);
+      required int offerId,
+      required int originalUnitPrice})
+      : super(
+            offerId: offerId,
+            offerType: OfferType.multiBuyFixed,
+            originalUnitPrice: originalUnitPrice);
 
   @override
-  int calculateDiscount({int? itemCount, int? originalPrice}) {
-    if (itemCount == null || originalPrice == null) return 0;
+  int calculateFinalPrice({int? itemCount}) {
+    if (itemCount == null) return 0;
 
+    int numberOfOffers = (itemCount / offerUnits).floor();
     int itemsNotCoveredByOffer = itemCount % offerUnits;
 
-    return (itemCount - itemsNotCoveredByOffer) * offerAmount +
-        (itemsNotCoveredByOffer * originalPrice);
+    return numberOfOffers * offerAmount +
+        (itemsNotCoveredByOffer * originalUnitPrice);
   }
+
+  @override
+  int calculateDiscount({int? itemCount}) =>
+      calculateOriginalPrice(itemCount: itemCount) -
+      calculateFinalPrice(itemCount: itemCount);
 }

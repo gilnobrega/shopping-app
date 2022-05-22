@@ -7,16 +7,28 @@ class OfferMultibuyNForN extends Offer {
   late final int forUnits; //3 units
 
   OfferMultibuyNForN(
-      {required this.offerUnits, required this.forUnits, required int offerId})
-      : super(offerId: offerId, offerType: OfferType.multiBuyNForN);
+      {required this.offerUnits,
+      required this.forUnits,
+      required int offerId,
+      required int originalUnitPrice})
+      : super(
+            offerId: offerId,
+            offerType: OfferType.multiBuyNForN,
+            originalUnitPrice: originalUnitPrice);
 
   @override
-  int calculateDiscount({int? itemCount, int? originalPrice}) {
-    if (itemCount == null || originalPrice == null) return 0;
+  int calculateFinalPrice({int? itemCount}) {
+    if (itemCount == null) return 0;
 
+    int numberOfOffers = (itemCount / offerUnits).floor();
     int itemsNotCoveredByOffer = itemCount % offerUnits;
 
-    return (itemCount - itemsNotCoveredByOffer) * (forUnits * originalPrice) +
-        (itemsNotCoveredByOffer * originalPrice);
+    return numberOfOffers * (forUnits * originalUnitPrice) +
+        (itemsNotCoveredByOffer * originalUnitPrice);
   }
+
+  @override
+  int calculateDiscount({int? itemCount}) =>
+      calculateOriginalPrice(itemCount: itemCount) -
+      calculateFinalPrice(itemCount: itemCount);
 }
