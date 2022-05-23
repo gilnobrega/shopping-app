@@ -17,6 +17,7 @@ class ItemTile extends StatelessWidget {
       required this.count,
       required this.addItem,
       required this.removeItem,
+      required this.viewDetails,
       required this.offers})
       : super(key: key);
 
@@ -28,6 +29,7 @@ class ItemTile extends StatelessWidget {
   final int count;
   final VoidCallback addItem;
   final VoidCallback removeItem;
+  final VoidCallback viewDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class ItemTile extends StatelessWidget {
               .toList(),
           pricePerUnit: pricePerUnit,
           totalPrice: totalPrice,
+          viewDetails: viewDetails,
         ),
         ItemTileButtons(addItem: addItem, removeItem: removeItem, count: count)
       ],

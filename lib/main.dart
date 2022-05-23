@@ -7,8 +7,9 @@ import 'package:shopping_app/Core/Offers/offer_single.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
-import 'package:shopping_app/Widgets/item_tile.dart';
-import 'package:shopping_app/Widgets/shopping_cart_floating_button.dart';
+import 'package:shopping_app/Pages/available_items_page.dart';
+import 'package:shopping_app/Pages/checkout_page.dart';
+import 'package:shopping_app/Pages/item_details_page.dart';
 
 void main() {
   Currency currency = Currency(name: "GBP", symbolMajor: "£", symbolMinor: "p");
@@ -52,78 +53,74 @@ void main() {
       availableOffers: [offer1, offer2, offer3, offer4, offer5],
       availableItems: [item1, item2, item3, item4]);
 
-  runApp(MyApp(
+  runApp(ShoppingApp(
     cart: cart,
   ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.cart}) : super(key: key);
-
+class ShoppingApp extends StatefulWidget {
+  const ShoppingApp({Key? key, required this.cart}) : super(key: key);
   final CartModel cart;
+
+  @override
+  State<StatefulWidget> createState() => _ShoppingAppState();
+}
+
+class _ShoppingAppState extends State<ShoppingApp> {
+  static const String _appTitle = "Shopping App";
+  final heroController = HeroController();
+
+  ItemModel? _currentItem;
+  bool _showCheckoutPage = false;
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Shopping App',
+      title: _appTitle,
       theme: ThemeData(primarySwatch: Colors.indigo),
-      home: MyHomePage(
-        title: 'Shopping App',
-        cart: cart,
+      home: Navigator(
+        observers: [heroController],
+        pages: [
+          MaterialPage(
+              child: AvailableItemsPage(
+            title: _appTitle,
+            cart: widget.cart,
+            viewDetails: viewItemDetails,
+            onShoppingCartFloatingButtonPressed:
+                onShoppingCartFloatingButtonPressed,
+          )),
+          if (_currentItem != null)
+            ItemDetailsPage(
+                item: _currentItem!,
+                cart: widget.cart,
+                onShoppingCartFloatingButtonPressed:
+                    onShoppingCartFloatingButtonPressed),
+          if (_showCheckoutPage) CheckoutPage(cart: widget.cart)
+        ],
+        //Resets item if page pops (previous page sign)
+        onPopPage: (route, result) {
+          if (!route.didPop(result)) return false;
+          setState(() {
+            _currentItem = null;
+            _showCheckoutPage = false;
+          });
+
+          return true;
+        },
       ),
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title, required this.cart})
-      : super(key: key);
-  final String title;
-  final CartModel cart;
+  void onShoppingCartFloatingButtonPressed() {
+    setState(() {
+      _showCheckoutPage = true;
+    });
+  }
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: ListView.builder(
-        itemCount: widget.cart.availableItems.length,
-        itemBuilder: (context, index) {
-          ItemModel item = widget.cart.availableItems[index];
-          List<Offer> offers =
-              widget.cart.getOffersForItem(itemId: item.itemId).toList();
-
-          return ItemTile(
-            item: item,
-            currency: widget.cart.currency,
-            pricePerUnit:
-                widget.cart.getPriceForItem(itemId: item.itemId, itemCount: 1),
-            totalPrice: widget.cart.getPriceForItem(itemId: item.itemId),
-            count: widget.cart.items[item.itemId] ?? 0,
-            offers: offers,
-            addItem: () {
-              setState(() {
-                widget.cart.addItem(item.itemId);
-              });
-            },
-            removeItem: () {
-              setState(() {
-                widget.cart.removeItem(item.itemId);
-              });
-            },
-          );
-        },
-      ),
-      floatingActionButton: ShoppingCartFloatingButton(
-          currency: widget.cart.currency,
-          totalPrice: widget.cart.getTotalPrice()),
-    );
+  void viewItemDetails(ItemModel item) {
+    setState(() {
+      _currentItem = item;
+    });
   }
 }

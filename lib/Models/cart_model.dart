@@ -13,6 +13,9 @@ class CartModel {
   //dictionary with item id and number of item id that are added to cart
   final Map<int, int> items = {};
 
+  bool get isEmpty =>
+      items.values.fold(0, (int item1, int item2) => item1 + item2) == 0;
+
   final Currency currency;
 
   CartModel(

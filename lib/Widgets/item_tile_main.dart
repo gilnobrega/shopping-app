@@ -12,7 +12,8 @@ class ItemTileMainBody extends StatelessWidget {
       required this.item,
       required this.currency,
       required this.pricePerUnit,
-      required this.totalPrice})
+      required this.totalPrice,
+      required this.viewDetails})
       : super(key: key);
 
   final List<Offer> offers;
@@ -20,6 +21,7 @@ class ItemTileMainBody extends StatelessWidget {
   final Currency currency;
   final Price pricePerUnit;
   final Price totalPrice;
+  final VoidCallback viewDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,9 @@ class ItemTileMainBody extends StatelessWidget {
       isThreeLine: offers.isNotEmpty,
       leading: item.pictureUrl == null
           ? const Icon(Icons.question_mark)
-          : Image.network(item.pictureUrl!),
+          : Hero(
+              tag: item.pictureUrl ?? "${item.itemId}Picture",
+              child: Image.network(item.pictureUrl!)),
       title: Text(
         item.title,
         textScaleFactor: 1.2,
@@ -50,7 +54,7 @@ class ItemTileMainBody extends StatelessWidget {
       ),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       dense: false,
-      onTap: () {},
+      onTap: viewDetails,
       minVerticalPadding: 12.0,
     );
   }

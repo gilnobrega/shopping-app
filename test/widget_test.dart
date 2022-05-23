@@ -28,7 +28,7 @@ void main() {
         availableItems: [item1, item2]);
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(
+    await tester.pumpWidget(ShoppingApp(
       cart: cart,
     ));
 
