@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Models/cart_model.dart';
+import 'package:shopping_app/Widgets/shopping_cart_bottom_sheet.dart';
 
 class CheckoutPage extends Page {
   final CartModel cart;
@@ -27,6 +28,19 @@ class CheckoutPageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("Checkout")),
-        body: const Text("Checkout"));
+        body: Container(),
+        bottomSheet: ShoppingCartBottomBar(
+          totalPrice: cart.getTotalPrice(),
+          currency: cart.currency,
+        ),
+        floatingActionButton: Hero(
+          tag: "ShoppingCartFloatingButtonHeroTag",
+          child: FloatingActionButton(
+            tooltip: 'Pay now',
+            onPressed: () {},
+            heroTag: null,
+            child: Icon(Icons.payment),
+          ),
+        ));
   }
 }

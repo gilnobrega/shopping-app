@@ -24,41 +24,41 @@ class ShoppingCartFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-        tag: "ShoppingCartFloatingButtonHeroTag",
-        child: Stack(
-          alignment: AlignmentDirectional.centerEnd,
-          children: [
-            //shows and hides label behind shopping cart button
-            AnimatedSwitcher(
-                switchInCurve: Curves.easeInOut,
-                switchOutCurve: Curves.easeInOut,
-                duration: _animationDuration,
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return SlideTransition(
-                      position: Tween<Offset>(
-                              begin: const Offset(1.0, 0),
-                              end: const Offset(0.0, 0.0))
-                          .animate(animation),
-                      child: child);
-                },
-                child: Opacity(
-                    opacity: cartIsEmpty ? 0 : 1,
-                    key: ValueKey<bool>(cartIsEmpty),
-                    child: ShoppingCartFloatingButtonLabel(
-                      buttonSize: buttonSize,
-                      padding: padding,
-                      currency: currency,
-                      totalPrice: totalPrice,
-                    ))),
-            Transform.translate(
-                offset: const Offset(buttonSize / 2, 0),
-                child: Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  width: buttonSize,
-                  height: buttonSize,
-                )),
-            AnimatedRotation(
+    return Stack(
+      alignment: AlignmentDirectional.centerEnd,
+      children: [
+        //shows and hides label behind shopping cart button
+        AnimatedSwitcher(
+            switchInCurve: Curves.easeInOut,
+            switchOutCurve: Curves.easeInOut,
+            duration: _animationDuration,
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return SlideTransition(
+                  position: Tween<Offset>(
+                          begin: const Offset(1.0, 0),
+                          end: const Offset(0.0, 0.0))
+                      .animate(animation),
+                  child: child);
+            },
+            child: Opacity(
+                opacity: cartIsEmpty ? 0 : 1,
+                key: ValueKey<bool>(cartIsEmpty),
+                child: ShoppingCartFloatingButtonLabel(
+                  buttonSize: buttonSize,
+                  padding: padding,
+                  currency: currency,
+                  totalPrice: totalPrice,
+                ))),
+        Transform.translate(
+            offset: const Offset(buttonSize / 2, 0),
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              width: buttonSize,
+              height: buttonSize,
+            )),
+        Hero(
+            tag: "ShoppingCartFloatingButtonHeroTag",
+            child: AnimatedRotation(
                 duration: _animationDuration,
                 curve: Curves.easeInOut,
                 turns: cartIsEmpty ? 0 : -1,
@@ -82,8 +82,8 @@ class ShoppingCartFloatingButton extends StatelessWidget {
                           cartIsEmpty
                               ? Icons.shopping_cart_outlined
                               : Icons.shopping_cart)),
-                )),
-          ],
-        ));
+                ))),
+      ],
+    );
   }
 }
