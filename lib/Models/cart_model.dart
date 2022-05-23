@@ -1,7 +1,10 @@
 import 'package:shopping_app/Core/Offers/offer.dart';
+import 'package:shopping_app/Core/Offers/offer_multibuy_fixed.dart';
+import 'package:shopping_app/Core/Offers/offer_multibuy_n_for_n.dart';
 import 'package:shopping_app/Core/Offers/offer_none.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
+import 'package:shopping_app/Enums/offer_type.dart';
 import 'package:shopping_app/Models/item_model.dart';
 
 class CartModel {
@@ -57,16 +60,46 @@ class CartModel {
     return availableOffers.where((offer) => itemId == offer.itemId);
   }
 
-  Price getPriceForItem({required int itemId, int? itemCount}) {
-    //gets item count from list of items if item count is not specified
-    itemCount = itemCount ?? items[itemId] ?? 0;
-
+  Price _getPriceForItemBestOffer(
+      {required int itemId, required int itemCount}) {
     //Calculates prices for all available offers that match this item id
     return getOffersForItem(itemId: itemId)
         .map((e) => e.getPrice(itemCount: itemCount))
         //returns price with lowest final amount
         .reduce((price1, price2) =>
             price1.finalAmount < price2.finalAmount ? price1 : price2);
+  }
+
+  //Combines multiple offers and finds best price
+  Price getPriceForItem({required int itemId, int? itemCount}) {
+    //gets item count from list of items if item count is not specified
+    itemCount = itemCount ?? items[itemId] ?? 0;
+
+    Price priceFromBestOffer =
+        _getPriceForItemBestOffer(itemId: itemId, itemCount: itemCount);
+
+    int? offerUnits;
+
+    if (priceFromBestOffer.offerApplied?.offerType == OfferType.multiBuyFixed) {
+      OfferMultibuyFixed offer =
+          priceFromBestOffer.offerApplied as OfferMultibuyFixed;
+      offerUnits = offer.offerUnits;
+    }
+    if (priceFromBestOffer.offerApplied?.offerType == OfferType.multiBuyNForN) {
+      OfferMultibuyNForN offer =
+          priceFromBestOffer.offerApplied as OfferMultibuyNForN;
+      offerUnits = offer.offerUnits;
+    }
+
+    if (offerUnits == null) return priceFromBestOffer;
+
+    int modulo = itemCount % offerUnits;
+
+    if (modulo == 0) return priceFromBestOffer;
+
+    return _getPriceForItemBestOffer(
+            itemId: itemId, itemCount: itemCount - modulo) +
+        _getPriceForItemBestOffer(itemId: itemId, itemCount: modulo);
   }
 
   Price getTotalPrice() {

@@ -28,6 +28,7 @@ class Price {
   Price operator +(Price otherPrice) {
     return Price(
         finalAmount: finalAmount + otherPrice.finalAmount,
-        originalAmount: originalAmount + otherPrice.originalAmount);
+        originalAmount: originalAmount + otherPrice.originalAmount,
+        offerApplied: offerApplied);
   }
 }
