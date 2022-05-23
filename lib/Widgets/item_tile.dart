@@ -29,7 +29,7 @@ class ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: AlignmentDirectional.centerEnd,
+      alignment: AlignmentDirectional.center,
       children: [
         ItemTileMainBody(
           item: item,

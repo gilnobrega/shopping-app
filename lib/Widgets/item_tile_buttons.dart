@@ -17,17 +17,16 @@ class ItemTileButtons extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.only(right: 16.0),
         child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 150),
             transitionBuilder: (Widget child, Animation<double> animation) {
-              return SlideTransition(
-                  position: Tween<Offset>(
-                          begin: const Offset(2.0, 0), end: const Offset(0, 0))
-                      .animate(animation),
+              return FadeTransition(
+                  opacity: Tween<double>(begin: 0, end: 1).animate(animation),
                   child: child);
             },
             child: Row(
               key: ValueKey<bool>(count == 0),
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 if (count > 0)
                   IconButton(
