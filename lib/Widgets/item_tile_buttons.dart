@@ -30,7 +30,11 @@ class ItemTileButtons extends StatelessWidget {
               children: [
                 if (count > 0)
                   IconButton(
-                      onPressed: removeItem, icon: const Icon(Icons.remove)),
+                      iconSize: 16.0,
+                      splashRadius: 24.0,
+                      color: Theme.of(context).textTheme.caption!.color,
+                      onPressed: removeItem,
+                      icon: const Icon(Icons.remove)),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 150),
                   transitionBuilder:
@@ -38,10 +42,17 @@ class ItemTileButtons extends StatelessWidget {
                     return ScaleTransition(scale: animation, child: child);
                   },
                   child: Text(
-                      key: ValueKey<int>(count), count > 0 ? '$count' : ''),
+                    key: ValueKey<int>(count),
+                    count > 0 ? '$count' : '',
+                  ),
                 ),
                 if (count > 0)
-                  IconButton(onPressed: addItem, icon: const Icon(Icons.add)),
+                  IconButton(
+                      iconSize: 16.0,
+                      splashRadius: 24.0,
+                      onPressed: addItem,
+                      color: Theme.of(context).textTheme.caption!.color,
+                      icon: const Icon(Icons.add)),
                 if (count == 0)
                   TextButton(
                       onPressed: addItem,
