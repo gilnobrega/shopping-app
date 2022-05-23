@@ -10,6 +10,7 @@ import 'package:shopping_app/Models/item_model.dart';
 import 'package:shopping_app/Pages/available_items_page.dart';
 import 'package:shopping_app/Pages/checkout_page.dart';
 import 'package:shopping_app/Pages/item_details_page.dart';
+import 'package:shopping_app/constants.dart';
 
 void main() {
   Currency currency = Currency(name: "GBP", symbolMajor: "£", symbolMinor: "p");
@@ -17,23 +18,27 @@ void main() {
   ItemModel item1 = ItemModel(
       itemId: 1,
       title: "Face Mask",
+      description: Constants.loremIpsum,
       pictureUrl:
           "https://m.media-amazon.com/images/I/61+ilDgVVwS._UL1500_.jpg");
   ItemModel item2 = ItemModel(
       itemId: 2,
       title: "Toilet Roll",
+      description: Constants.loremIpsum,
       pictureUrl:
           "https://image.made-in-china.com/2f0j00QmUETpwCOdua/4-Ply-180g-Roll-Individual-Packing-Toilet-Tissue-Paper.jpg");
 
   ItemModel item3 = ItemModel(
       itemId: 3,
       title: "Crisps",
+      description: Constants.loremIpsum,
       pictureUrl:
           "https://assets.sainsburys-groceries.co.uk/gol/6447861/1/640x640.jpg");
 
   ItemModel item4 = ItemModel(
       itemId: 4,
       title: "Butter",
+      description: Constants.loremIpsum,
       pictureUrl:
           "https://assets.sainsburys-groceries.co.uk/gol/2242583/1/640x640.jpg");
 

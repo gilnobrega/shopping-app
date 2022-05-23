@@ -53,8 +53,27 @@ class ItemDetailsPageScreen extends StatelessWidget {
           cartIsEmpty: cart.isEmpty,
         ),
         appBar: AppBar(title: Text(item.title)),
-        body: Hero(
-            tag: item.pictureUrl ?? "${item.itemId}Picture",
-            child: Image.network(item.pictureUrl ?? "")));
+        body: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: Card(
+                  elevation: 8,
+                  child: Container(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Hero(
+                          tag: item.pictureUrl ?? "${item.itemId}Picture",
+                          child: Image.network(item.pictureUrl ?? "")))),
+            ),
+            if (item.description != null)
+              Card(
+                elevation: 8,
+                child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(item.description!)),
+              )
+          ],
+        ));
   }
 }
