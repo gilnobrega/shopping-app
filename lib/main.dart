@@ -6,6 +6,7 @@ import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
 import 'package:shopping_app/Widgets/item_tile.dart';
+import 'package:shopping_app/Widgets/shopping_cart_floating_button.dart';
 
 void main() {
   Currency currency = Currency(name: "GBP", symbolMajor: "£", symbolMinor: "p");
@@ -99,11 +100,9 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.shopping_cart),
-      ),
+      floatingActionButton: ShoppingCartFloatingButton(
+          currency: widget.cart.currency,
+          totalPrice: widget.cart.getTotalPrice()),
     );
   }
 }
