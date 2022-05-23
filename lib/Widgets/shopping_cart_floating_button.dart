@@ -18,8 +18,12 @@ class ShoppingCartFloatingButton extends StatelessWidget {
   final Price totalPrice;
   final Currency currency;
 
+  static const Duration _animationDuration = Duration(milliseconds: 500);
+
   @override
   Widget build(BuildContext context) {
+    bool cartIsEmpty = totalPrice.finalAmount == 0;
+
     return Stack(
       alignment: AlignmentDirectional.centerEnd,
       children: [
@@ -27,7 +31,7 @@ class ShoppingCartFloatingButton extends StatelessWidget {
         AnimatedSwitcher(
             switchInCurve: Curves.easeInOut,
             switchOutCurve: Curves.easeInOut,
-            duration: const Duration(milliseconds: 500),
+            duration: _animationDuration,
             transitionBuilder: (Widget child, Animation<double> animation) {
               return SlideTransition(
                   position: Tween<Offset>(
@@ -37,8 +41,8 @@ class ShoppingCartFloatingButton extends StatelessWidget {
                   child: child);
             },
             child: Opacity(
-                opacity: totalPrice.finalAmount == 0 ? 0 : 1,
-                key: ValueKey<bool>(totalPrice.finalAmount == 0),
+                opacity: cartIsEmpty ? 0 : 1,
+                key: ValueKey<bool>(cartIsEmpty),
                 child: ShoppingCartFloatingButtonLabel(
                   buttonSize: buttonSize,
                   padding: padding,
@@ -52,17 +56,28 @@ class ShoppingCartFloatingButton extends StatelessWidget {
               width: buttonSize,
               height: buttonSize,
             )),
-        FloatingActionButton(
-          onPressed: onPressed,
-          tooltip: totalPrice.finalAmount == 0 ? 'Cart is Empty' : 'View Cart',
-          child: AnimatedRotation(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-              turns: totalPrice.finalAmount == 0 ? 0 : -1,
-              child: Icon(totalPrice.finalAmount == 0
-                  ? Icons.shopping_cart_outlined
-                  : Icons.shopping_cart)),
-        ),
+        AnimatedRotation(
+            duration: _animationDuration,
+            curve: Curves.easeInOut,
+            turns: cartIsEmpty ? 0 : -1,
+            child: FloatingActionButton(
+              onPressed: onPressed,
+              tooltip: cartIsEmpty ? 'Cart is Empty' : 'View Cart',
+              child: AnimatedSwitcher(
+                  duration: _animationDuration,
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity:
+                          Tween<double>(begin: 0, end: 1).animate(animation),
+                      child: child,
+                    );
+                  },
+                  child: Icon(
+                      key: ValueKey<bool>(cartIsEmpty),
+                      cartIsEmpty
+                          ? Icons.shopping_cart_outlined
+                          : Icons.shopping_cart)),
+            )),
       ],
     );
   }
