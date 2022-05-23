@@ -29,19 +29,39 @@ class ShoppingCartFloatingButtonLabel extends StatelessWidget {
               bottomLeft: Radius.circular(buttonSize / 2))),
       child: IntrinsicWidth(
           child: Center(
-              child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 250),
-        transitionBuilder: (child, animation) {
-          return ScaleTransition(scale: animation, child: child);
-        },
-        child: Text(
-            key: ValueKey<int>(totalPrice.finalAmount),
-            currency.displayAmount(amount: totalPrice.finalAmount),
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(color: Colors.white)),
-      ))),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            //This placeholder enforces a minimum shopping label width
+            //So the label doesnt resize between 9£ and 10£, etc.
+            _generateText(context: context, text: "£00.00", placeHolder: true),
+            AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                transitionBuilder: (child, animation) {
+                  return ScaleTransition(scale: animation, child: child);
+                },
+                child: _generateText(
+                    key: ValueKey<int>(totalPrice.finalAmount),
+                    context: context,
+                    text:
+                        currency.displayAmount(amount: totalPrice.finalAmount)))
+          ],
+        ),
+      )),
     );
+  }
+
+  Widget _generateText(
+      {required BuildContext context,
+      required String text,
+      Key? key,
+      bool placeHolder = false}) {
+    return Text(
+        key: key,
+        text,
+        style: Theme.of(context)
+            .textTheme
+            .headline6!
+            .copyWith(color: Colors.white.withAlpha(placeHolder ? 0 : 255)));
   }
 }
