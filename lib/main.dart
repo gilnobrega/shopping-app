@@ -44,9 +44,12 @@ void main() {
   Offer offer4 =
       OfferSingle(itemId: 4, discountedAmount: 15, originalUnitPrice: 195);
 
+  Offer offer5 = OfferMultibuyNForN(
+      itemId: 4, offerUnits: 3, forUnits: 2, originalUnitPrice: 195);
+
   CartModel cart = CartModel(
       currency: currency,
-      availableOffers: [offer1, offer2, offer3, offer4],
+      availableOffers: [offer1, offer2, offer3, offer4, offer5],
       availableItems: [item1, item2, item3, item4]);
 
   runApp(MyApp(
@@ -100,10 +103,11 @@ class _MyHomePageState extends State<MyHomePage> {
           return ItemTile(
             item: item,
             currency: widget.cart.currency,
-            price:
+            pricePerUnit:
                 widget.cart.getPriceForItem(itemId: item.itemId, itemCount: 1),
+            totalPrice: widget.cart.getPriceForItem(itemId: item.itemId),
             count: widget.cart.items[item.itemId] ?? 0,
-            offer: offers.length > 0 ? offers.first : null,
+            offers: offers,
             addItem: () {
               setState(() {
                 widget.cart.addItem(item.itemId);

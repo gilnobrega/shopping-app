@@ -1,1 +1,1 @@
-enum OfferType { none, single, multiBuyFixed, multiBuyNForN }
+enum OfferType { single, multiBuyFixed, multiBuyNForN, none }

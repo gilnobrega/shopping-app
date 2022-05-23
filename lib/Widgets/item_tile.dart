@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
+import 'package:shopping_app/Enums/offer_type.dart';
 import 'package:shopping_app/Models/item_model.dart';
 import 'package:shopping_app/Widgets/item_tile_buttons.dart';
 import 'package:shopping_app/Widgets/item_tile_main.dart';
@@ -10,17 +11,19 @@ class ItemTile extends StatelessWidget {
   const ItemTile(
       {Key? key,
       required this.item,
-      required this.price,
+      required this.pricePerUnit,
+      required this.totalPrice,
       required this.currency,
       required this.count,
       required this.addItem,
       required this.removeItem,
-      this.offer})
+      required this.offers})
       : super(key: key);
 
   final ItemModel item;
-  final Offer? offer;
-  final Price price;
+  final List<Offer> offers;
+  final Price pricePerUnit;
+  final Price totalPrice;
   final Currency currency;
   final int count;
   final VoidCallback addItem;
@@ -34,8 +37,11 @@ class ItemTile extends StatelessWidget {
         ItemTileMainBody(
           item: item,
           currency: currency,
-          offer: offer,
-          price: price,
+          offers: offers
+              .where((offer) => offer.offerType != OfferType.none)
+              .toList(),
+          pricePerUnit: pricePerUnit,
+          totalPrice: totalPrice,
         ),
         ItemTileButtons(addItem: addItem, removeItem: removeItem, count: count)
       ],

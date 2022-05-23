@@ -1,10 +1,11 @@
 import 'package:shopping_app/Core/Offers/offer.dart';
+import 'package:shopping_app/Core/Offers/offer_none.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Models/item_model.dart';
 
 class CartModel {
-  final List<Offer> availableOffers;
+  late final List<Offer> availableOffers;
   final List<ItemModel> availableItems;
 
   //dictionary with item id and number of item id that are added to cart
@@ -14,8 +15,23 @@ class CartModel {
 
   CartModel(
       {required this.currency,
-      required this.availableOffers,
-      required this.availableItems});
+      required availableOffers,
+      required this.availableItems}) {
+    this.availableOffers = _generateOffers(availableOffers);
+  }
+
+  //creates at least one Offer.None for each price,
+  //This is a little workaround for
+  List<Offer> _generateOffers(List<Offer> input) {
+    return (input +
+            input
+                .map((offer) => OfferNone(
+                    itemId: offer.itemId,
+                    originalUnitPrice: offer.originalUnitPrice))
+                .toList())
+        .toSet()
+        .toList();
+  }
 
   //increments number of items with this itemid
   void addItem(int itemId) {
@@ -34,6 +50,10 @@ class CartModel {
 
   //Gets available offers for a specific item
   Iterable<Offer> getOffersForItem({required int itemId}) {
+    //gives priority to Offers of type none
+    availableOffers.sort((Offer offer1, Offer offer2) =>
+        (offer1.offerType.index).compareTo(offer2.offerType.index));
+
     return availableOffers.where((offer) => itemId == offer.itemId);
   }
 

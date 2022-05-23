@@ -59,9 +59,10 @@ class ShoppingCartFloatingButtonLabel extends StatelessWidget {
     return Text(
         key: key,
         text,
-        style: Theme.of(context)
-            .textTheme
-            .headline6!
-            .copyWith(color: Colors.white.withAlpha(placeHolder ? 0 : 255)));
+        style: Theme.of(context).textTheme.headline6!.copyWith(
+            color: Theme.of(context)
+                .primaryIconTheme
+                .color!
+                .withAlpha(placeHolder ? 0 : 255)));
   }
 }
