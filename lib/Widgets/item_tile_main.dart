@@ -39,7 +39,7 @@ class ItemTileMainBody extends StatelessWidget {
       subtitle: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(currency.displayAmount(amount: price.finalAmount)),
+          Text(currency.displayAmount(amount: price.originalAmount)),
           if (offerString != null)
             ItemTileMainBodyOfferPill(offerString: offerString)
         ],

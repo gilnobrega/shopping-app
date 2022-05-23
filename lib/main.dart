@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Core/Offers/offer_multibuy_fixed.dart';
 import 'package:shopping_app/Core/Offers/offer_multibuy_n_for_n.dart';
+import 'package:shopping_app/Core/Offers/offer_none.dart';
+import 'package:shopping_app/Core/Offers/offer_single.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
@@ -22,15 +24,30 @@ void main() {
       pictureUrl:
           "https://image.made-in-china.com/2f0j00QmUETpwCOdua/4-Ply-180g-Roll-Individual-Packing-Toilet-Tissue-Paper.jpg");
 
+  ItemModel item3 = ItemModel(
+      itemId: 3,
+      title: "Crisps",
+      pictureUrl:
+          "https://assets.sainsburys-groceries.co.uk/gol/6447861/1/640x640.jpg");
+
+  ItemModel item4 = ItemModel(
+      itemId: 4,
+      title: "Butter",
+      pictureUrl:
+          "https://assets.sainsburys-groceries.co.uk/gol/2242583/1/640x640.jpg");
+
   Offer offer1 = OfferMultibuyFixed(
       offerUnits: 2, offerAmount: 400, itemId: 1, originalUnitPrice: 250);
   Offer offer2 = OfferMultibuyNForN(
       offerUnits: 4, forUnits: 3, itemId: 2, originalUnitPrice: 65);
+  Offer offer3 = OfferNone(itemId: 3, originalUnitPrice: 195);
+  Offer offer4 =
+      OfferSingle(itemId: 4, discountedAmount: 15, originalUnitPrice: 195);
 
   CartModel cart = CartModel(
       currency: currency,
-      availableOffers: [offer1, offer2],
-      availableItems: [item1, item2]);
+      availableOffers: [offer1, offer2, offer3, offer4],
+      availableItems: [item1, item2, item3, item4]);
 
   runApp(MyApp(
     cart: cart,
