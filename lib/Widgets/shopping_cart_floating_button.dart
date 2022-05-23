@@ -54,12 +54,14 @@ class ShoppingCartFloatingButton extends StatelessWidget {
             )),
         FloatingActionButton(
           onPressed: onPressed,
-          tooltip: 'View Cart',
+          tooltip: totalPrice.finalAmount == 0 ? 'Cart is Empty' : 'View Cart',
           child: AnimatedRotation(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
               turns: totalPrice.finalAmount == 0 ? 0 : -1,
-              child: const Icon(Icons.shopping_cart)),
+              child: Icon(totalPrice.finalAmount == 0
+                  ? Icons.shopping_cart_outlined
+                  : Icons.shopping_cart)),
         ),
       ],
     );
