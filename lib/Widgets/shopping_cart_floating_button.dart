@@ -25,28 +25,16 @@ class ShoppingCartFloatingButton extends StatelessWidget {
       children: [
         //shows and hides label behind shopping cart button
         AnimatedSwitcher(
-            switchInCurve: Curves.easeOut,
-            switchOutCurve: Curves.easeIn,
-            duration: const Duration(milliseconds: 150),
+            switchInCurve: Curves.easeInOut,
+            switchOutCurve: Curves.easeInOut,
+            duration: const Duration(milliseconds: 500),
             transitionBuilder: (Widget child, Animation<double> animation) {
-              return Stack(
-                  alignment: AlignmentDirectional.centerEnd,
-                  children: [
-                    SlideTransition(
-                      position: Tween<Offset>(
-                              begin: const Offset(1.0, 0),
-                              end: const Offset(0.0, 0.0))
-                          .animate(animation),
-                      child: child,
-                    ),
-                    Transform.translate(
-                        offset: const Offset(buttonSize / 2, 0),
-                        child: Container(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          width: buttonSize,
-                          height: buttonSize,
-                        )),
-                  ]);
+              return SlideTransition(
+                  position: Tween<Offset>(
+                          begin: const Offset(1.0, 0),
+                          end: const Offset(0.0, 0.0))
+                      .animate(animation),
+                  child: child);
             },
             child: Opacity(
                 opacity: totalPrice.finalAmount == 0 ? 0 : 1,
@@ -57,10 +45,21 @@ class ShoppingCartFloatingButton extends StatelessWidget {
                   currency: currency,
                   totalPrice: totalPrice,
                 ))),
+        Transform.translate(
+            offset: const Offset(buttonSize / 2, 0),
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              width: buttonSize,
+              height: buttonSize,
+            )),
         FloatingActionButton(
           onPressed: onPressed,
           tooltip: 'View Cart',
-          child: const Icon(Icons.shopping_cart),
+          child: AnimatedRotation(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+              turns: totalPrice.finalAmount == 0 ? 0 : -1,
+              child: const Icon(Icons.shopping_cart)),
         ),
       ],
     );
