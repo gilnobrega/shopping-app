@@ -102,7 +102,8 @@ class _ShoppingAppState extends State<ShoppingApp> {
                 cart: widget.cart,
                 onShoppingCartFloatingButtonPressed:
                     onShoppingCartFloatingButtonPressed),
-          if (_showCheckoutPage) CheckoutPage(cart: widget.cart)
+          if (_showCheckoutPage)
+            CheckoutPage(cart: widget.cart, viewDetails: viewItemDetails)
         ],
         //Resets item if page pops (previous page sign)
         onPopPage: (route, result) {

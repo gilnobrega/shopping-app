@@ -33,21 +33,27 @@ class ItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: [
-        ItemTileMainBody(
-          item: item,
-          currency: currency,
-          offers: offers
-              .where((offer) => offer.offerType != OfferType.none)
-              .toList(),
-          pricePerUnit: pricePerUnit,
-          totalPrice: totalPrice,
-          viewDetails: viewDetails,
-        ),
-        ItemTileButtons(addItem: addItem, removeItem: removeItem, count: count)
-      ],
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          ItemTileMainBody(
+            item: item,
+            currency: currency,
+            offers: offers
+                .where((offer) => offer.offerType != OfferType.none)
+                .toList(),
+            pricePerUnit: pricePerUnit,
+            totalPrice: totalPrice,
+            viewDetails: viewDetails,
+          ),
+          ItemTileButtons(
+            addItem: addItem,
+            removeItem: removeItem,
+            count: count,
+          )
+        ],
+      ),
+    ]);
   }
 }

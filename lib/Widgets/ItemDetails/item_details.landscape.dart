@@ -12,9 +12,8 @@ class ItemDetailsLandscape extends StatelessWidget {
     return Center(
         child: Container(
             margin: const EdgeInsets.all(16),
-            child: Stack(
-              children: [
-                Container(
+            child: Stack(children: [
+              Container(
                   constraints: const BoxConstraints(maxWidth: 1000),
                   padding: const EdgeInsets.only(left: 100, top: 64),
                   child: Card(
@@ -39,22 +38,20 @@ class ItemDetailsLandscape extends StatelessWidget {
                                               .textTheme
                                               .bodyMedium)
                                     ],
-                                  ))))),
-                ),
-                Positioned(
-                    left: 0,
-                    top: 0,
-                    child: Card(
-                        elevation: 8,
-                        child: Container(
-                            padding: const EdgeInsets.all(16.0),
-                            child: SizedBox(
-                                width: 256,
-                                height: 256,
-                                child: ItemTileIcon(
-                                  item: item,
-                                )))))
-              ],
-            )));
+                                  )))))),
+              Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Card(
+                      elevation: 8,
+                      child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SizedBox(
+                              width: 256,
+                              height: 256,
+                              child: ItemTileIcon(
+                                item: item,
+                              )))))
+            ])));
   }
 }

@@ -10,6 +10,11 @@ class CartModel {
   late final List<Offer> availableOffers;
   final List<ItemModel> availableItems;
 
+  List<ItemModel> get itemsInCart => availableItems
+      .where(
+          (item) => items.containsKey(item.itemId) && items[item.itemId]! > 0)
+      .toList();
+
   //dictionary with item id and number of item id that are added to cart
   final Map<int, int> items = {};
 

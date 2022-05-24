@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/Core/currency.dart';
+import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Transitions/counter_transition.dart';
 
 class ItemTileButtons extends StatelessWidget {
@@ -18,48 +20,55 @@ class ItemTileButtons extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.only(right: 16.0),
         child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 150),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return FadeTransition(
-                  opacity: Tween<double>(begin: 0, end: 1).animate(animation),
-                  child: child);
-            },
-            child: Row(
-              key: ValueKey<bool>(count == 0),
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                if (count > 0)
-                  IconButton(
-                      iconSize: 16.0,
-                      splashRadius: 24.0,
-                      color: Theme.of(context).textTheme.caption!.color,
-                      onPressed: removeItem,
-                      icon: const Icon(Icons.remove)),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 150),
-                  transitionBuilder: (child, animation) =>
-                      CounterTransition.transitionBuilder(child, animation,
-                          count, (child.key as ValueKey<int>).value),
-                  child: Text(
-                    key: ValueKey<int>(count),
-                    count > 0 ? '$count' : '',
+          duration: const Duration(milliseconds: 150),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return FadeTransition(
+                opacity: Tween<double>(begin: 0, end: 1).animate(animation),
+                child: child);
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            key: ValueKey<bool>(count == 0),
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (count > 0)
+                    IconButton(
+                        iconSize: 16.0,
+                        splashRadius: 24.0,
+                        color: Theme.of(context).textTheme.caption!.color,
+                        onPressed: removeItem,
+                        icon: const Icon(Icons.remove)),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 150),
+                    transitionBuilder: (child, animation) =>
+                        CounterTransition.transitionBuilder(child, animation,
+                            count, (child.key as ValueKey<int>).value),
+                    child: Text(
+                      key: ValueKey<int>(count),
+                      count > 0 ? '$count' : '',
+                    ),
                   ),
-                ),
-                if (count > 0)
-                  IconButton(
-                      iconSize: 16.0,
-                      splashRadius: 24.0,
-                      onPressed: addItem,
-                      color: Theme.of(context).textTheme.caption!.color,
-                      icon: const Icon(Icons.add)),
-                if (count == 0)
-                  TextButton(
-                      onPressed: addItem,
-                      style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(16.0)),
-                      child: const Text("Add"))
-              ],
-            )));
+                  if (count > 0)
+                    IconButton(
+                        iconSize: 16.0,
+                        splashRadius: 24.0,
+                        onPressed: addItem,
+                        color: Theme.of(context).textTheme.caption!.color,
+                        icon: const Icon(Icons.add)),
+                  if (count == 0)
+                    TextButton(
+                        onPressed: addItem,
+                        style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(16.0)),
+                        child: const Text("Add"))
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 }

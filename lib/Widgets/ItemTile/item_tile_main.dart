@@ -41,14 +41,28 @@ class ItemTileMainBody extends StatelessWidget {
         children: [
           Container(
               margin: const EdgeInsets.only(right: 4.0),
-              child: Text(
-                  currency.displayAmount(amount: pricePerUnit.originalAmount))),
+              child: Text(currency.displayAmount(
+                  amount: totalPrice.originalAmount == 0
+                      ? pricePerUnit.originalAmount
+                      : totalPrice.originalAmount))),
           ...offers.map((offer) => ItemTileMainBodyOfferPill(
                 offerIsApplied: totalPrice.finalAmount != 0 &&
                     offer == totalPrice.offerApplied,
                 offer: offer,
                 currency: currency,
-              ))
+              )),
+          if (totalPrice.discountedAmount > 0) ...[
+            SizedBox(width: double.infinity),
+            Container(
+                padding: EdgeInsets.only(right: 16),
+                child: Text(
+                  'saving ${currency.displayAmount(amount: totalPrice.discountedAmount)}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .caption!
+                      .copyWith(color: Colors.red[200]!),
+                )),
+          ]
         ],
       ),
       visualDensity: VisualDensity.adaptivePlatformDensity,
