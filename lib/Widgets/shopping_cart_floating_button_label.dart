@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
+import 'package:shopping_app/Transitions/counter_transition.dart';
 
 class ShoppingCartFloatingButtonLabel extends StatelessWidget {
   const ShoppingCartFloatingButtonLabel(
@@ -58,12 +59,18 @@ class ShoppingCartFloatingButtonLabel extends StatelessWidget {
                         child: Center(
                             child: AnimatedSwitcher(
                                 duration: const Duration(milliseconds: 250),
-                                transitionBuilder: (child, animation) {
-                                  return ScaleTransition(
-                                      scale: animation, child: child);
-                                },
+                                transitionBuilder: (child, animation) =>
+                                    //Slides up if price increases
+                                    //Otherwise slides down
+                                    CounterTransition.transitionBuilder(
+                                        child,
+                                        animation,
+                                        totalPrice.finalAmount,
+                                        (child.key as ValueKey<Price>)
+                                            .value
+                                            .finalAmount),
                                 child: _generateText(
-                                    key: ValueKey<int>(totalPrice.finalAmount),
+                                    key: ValueKey<Price>(totalPrice),
                                     context: context,
                                     text: currency.displayAmount(
                                         amount: totalPrice.finalAmount)))),

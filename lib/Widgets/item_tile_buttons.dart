@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/Transitions/counter_transition.dart';
 
 class ItemTileButtons extends StatelessWidget {
   const ItemTileButtons(
@@ -37,10 +38,9 @@ class ItemTileButtons extends StatelessWidget {
                       icon: const Icon(Icons.remove)),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 150),
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    return ScaleTransition(scale: animation, child: child);
-                  },
+                  transitionBuilder: (child, animation) =>
+                      CounterTransition.transitionBuilder(child, animation,
+                          count, (child.key as ValueKey<int>).value),
                   child: Text(
                     key: ValueKey<int>(count),
                     count > 0 ? '$count' : '',
