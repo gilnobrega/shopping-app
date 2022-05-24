@@ -72,22 +72,18 @@ class ItemListState extends State<ItemList> {
   }
 
   void addItem(int itemId) {
-    setState(() {
-      widget.cart.addItem(itemId);
-    });
+    widget.cart.addItem(itemId);
     widget.setState();
   }
 
   void removeItem(int index, int itemId) {
-    setState(() {
-      if (widget.isCheckoutScreen &&
-          widget.cart.items.containsKey(itemId) &&
-          widget.cart.items[itemId]! == 1) {
-        key.currentState!.removeItem(
-            index, (context, animation) => builder(context, index, animation));
-      }
-      widget.cart.removeItem(itemId);
-    });
+    if (widget.isCheckoutScreen &&
+        widget.cart.items.containsKey(itemId) &&
+        widget.cart.items[itemId]! == 1) {
+      key.currentState!.removeItem(
+          index, (context, animation) => builder(context, index, animation));
+    }
+    widget.cart.removeItem(itemId);
     widget.setState();
   }
 }
