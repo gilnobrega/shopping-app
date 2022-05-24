@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
-import 'package:shopping_app/Widgets/shopping_cart_floating_button_label.dart';
+import 'package:shopping_app/Widgets/ShoppingCartFloatingButton/shopping_cart_floating_button_label.dart';
 
 class ShoppingCartFloatingButton extends StatelessWidget {
   static const buttonSize = 56.0;

@@ -3,8 +3,8 @@ import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Models/item_model.dart';
-import 'package:shopping_app/Widgets/item_tile_icon.dart';
-import 'package:shopping_app/Widgets/item_tile_main_body_offer_pill.dart';
+import 'package:shopping_app/Widgets/ItemTile/item_tile_icon.dart';
+import 'package:shopping_app/Widgets/ItemTile/item_tile_main_body_offer_pill.dart';
 
 class ItemTileMainBody extends StatelessWidget {
   const ItemTileMainBody(

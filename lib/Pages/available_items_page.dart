@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
-import 'package:shopping_app/Widgets/item_tile.dart';
+import 'package:shopping_app/Widgets/ItemTile/item_tile.dart';
 import 'package:shopping_app/Widgets/responsive_layout_builder.dart';
-import 'package:shopping_app/Widgets/shopping_cart_floating_button.dart';
+import 'package:shopping_app/Widgets/ShoppingCartFloatingButton/shopping_cart_floating_button.dart';
 
 class AvailableItemsPage extends StatefulWidget {
   const AvailableItemsPage(

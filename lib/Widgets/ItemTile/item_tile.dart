@@ -4,8 +4,8 @@ import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Enums/offer_type.dart';
 import 'package:shopping_app/Models/item_model.dart';
-import 'package:shopping_app/Widgets/item_tile_buttons.dart';
-import 'package:shopping_app/Widgets/item_tile_main.dart';
+import 'package:shopping_app/Widgets/ItemTile/item_tile_buttons.dart';
+import 'package:shopping_app/Widgets/ItemTile/item_tile_main.dart';
 
 class ItemTile extends StatelessWidget {
   const ItemTile(
