@@ -56,7 +56,6 @@ class ItemListState extends State<ItemList> {
             position: Tween<Offset>(
                     begin: const Offset(-1.0, 0), end: const Offset(0, 0))
                 .animate(animation),
-            key: Key(UniqueKey().toString()),
             child: ItemTile(
                 item: item,
                 currency: widget.cart.currency,
