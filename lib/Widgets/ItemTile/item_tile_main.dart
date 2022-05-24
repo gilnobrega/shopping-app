@@ -52,9 +52,9 @@ class ItemTileMainBody extends StatelessWidget {
                 currency: currency,
               )),
           if (totalPrice.discountedAmount > 0) ...[
-            SizedBox(width: double.infinity),
+            const SizedBox(width: double.infinity),
             Container(
-                padding: EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.only(right: 16),
                 child: Text(
                   'saving ${currency.displayAmount(amount: totalPrice.discountedAmount)}',
                   style: Theme.of(context)

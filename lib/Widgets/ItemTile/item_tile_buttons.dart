@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app/Core/currency.dart';
-import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Transitions/counter_transition.dart';
 
 class ItemTileButtons extends StatelessWidget {
