@@ -82,6 +82,7 @@ class _ShoppingAppState extends State<ShoppingApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: _appTitle,
       theme: ThemeData(primarySwatch: Colors.indigo),
       home: Navigator(

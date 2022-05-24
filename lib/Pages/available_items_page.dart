@@ -23,16 +23,68 @@ class AvailableItemsPage extends StatefulWidget {
 }
 
 class _AvailableItemsPageState extends State<AvailableItemsPage> {
+  bool _showSearchBar = false;
+
+  late List<ItemModel> availableItems;
+
+  void _toggleSearchBar() {
+    setState(() {
+      _showSearchBar = !_showSearchBar;
+    });
+
+    if (!_showSearchBar) searchForItems();
+  }
+
+  @override
+  void initState() {
+    //gets all items
+    searchForItems();
+    super.initState();
+  }
+
+  void searchForItems([String searchFor = ""]) {
+    if (searchFor.isEmpty) {
+      availableItems = widget.cart.availableItems;
+      return;
+    }
+
+    availableItems = widget.cart.availableItems
+        .where((item) =>
+            item.title.toLowerCase().startsWith(searchFor.toLowerCase()))
+        .toList();
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: (_showSearchBar)
+            ? Container(
+                padding: EdgeInsets.symmetric(vertical: 2),
+                child: TextFormField(
+                  onChanged: searchForItems,
+                  style: Theme.of(context).primaryTextTheme.titleMedium,
+                  decoration: InputDecoration(
+                      isDense: true,
+                      border: InputBorder.none,
+                      labelText: 'Search for item...',
+                      labelStyle:
+                          Theme.of(context).primaryTextTheme.titleMedium),
+                ))
+            : Text(widget.title),
+        actions: [
+          //Toggles visibility of search bar
+          IconButton(
+              onPressed: _toggleSearchBar,
+              icon: Icon((_showSearchBar) ? Icons.close : Icons.search))
+        ],
       ),
       body: ListView.builder(
-        itemCount: widget.cart.availableItems.length,
+        itemCount: availableItems.length,
         itemBuilder: (context, index) {
-          ItemModel item = widget.cart.availableItems[index];
+          ItemModel item = availableItems[index];
           List<Offer> offers =
               widget.cart.getOffersForItem(itemId: item.itemId).toList();
 
