@@ -48,6 +48,7 @@ class CheckoutPageScreenState extends State<CheckoutPageScreen> {
           viewDetails: widget.viewDetails,
           cart: widget.cart,
           availableItems: widget.cart.itemsInCart,
+          isCheckoutScreen: true,
           setState: () => setState(() {}),
         )),
         bottomSheet: ShoppingCartBottomBar(

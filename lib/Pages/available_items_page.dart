@@ -88,6 +88,7 @@ class _AvailableItemsPageState extends State<AvailableItemsPage> {
           viewDetails: widget.viewDetails,
           cart: widget.cart,
           availableItems: availableItems,
+          isCheckoutScreen: false,
           setState: () => setState(() {}),
         )),
         floatingActionButton: ShoppingCartFloatingButton(
