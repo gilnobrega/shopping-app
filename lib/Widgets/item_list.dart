@@ -53,7 +53,8 @@ class ItemListState extends State<ItemList> {
 
     return ClipRect(
         child: SlideTransition(
-            position: Tween<Offset>(begin: Offset(-1.0, 0), end: Offset(0, 0))
+            position: Tween<Offset>(
+                    begin: const Offset(-1.0, 0), end: const Offset(0, 0))
                 .animate(animation),
             key: Key(UniqueKey().toString()),
             child: ItemTile(
