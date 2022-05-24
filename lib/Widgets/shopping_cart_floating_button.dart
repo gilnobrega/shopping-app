@@ -36,13 +36,6 @@ class ShoppingCartFloatingButton extends StatelessWidget {
           currency: currency,
           totalPrice: totalPrice,
         ),
-        Transform.translate(
-            offset: const Offset(buttonSize / 2, 0),
-            child: Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              width: buttonSize,
-              height: buttonSize,
-            )),
         Hero(
             tag: "ShoppingCartFloatingButtonHeroTag",
             child: AnimatedRotation(

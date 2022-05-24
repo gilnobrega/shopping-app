@@ -22,60 +22,52 @@ class ShoppingCartFloatingButtonLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BorderRadius borderRadius =
+        BorderRadius.all(Radius.circular(buttonSize / 2));
     return Hero(
       tag: "TotalPriceLabel",
-      child: AnimatedSwitcher(
-          switchInCurve: Curves.easeInOut,
-          switchOutCurve: Curves.easeInOut,
-          duration: animationDuration,
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return SlideTransition(
-                position: Tween<Offset>(
-                        begin: const Offset(1.0, 0),
-                        end: const Offset(0.0, 0.0))
-                    .animate(animation),
-                child: child);
-          },
-          child: Opacity(
-              opacity: cartIsEmpty ? 0 : 1,
-              key: ValueKey<bool>(cartIsEmpty),
-              child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  padding: EdgeInsets.only(
-                      left: padding, right: buttonSize / 2 + padding),
-                  margin: EdgeInsets.symmetric(horizontal: buttonSize / 2),
-                  height: 56.0,
-                  decoration: BoxDecoration(
-                      color:
-                          Theme.of(context).buttonTheme.colorScheme!.background,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(buttonSize / 2),
-                          bottomLeft: Radius.circular(buttonSize / 2))),
-                  child: IntrinsicWidth(
-                      child: Center(
-                    child: Stack(
-                      alignment: AlignmentDirectional.center,
-                      children: [
-                        //This placeholder enforces a minimum shopping label width
-                        //So the label doesnt resize between 9£ and 10£, etc.
-                        _generateText(
-                            context: context,
-                            text: "£00.00",
-                            placeHolder: true),
-                        AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 250),
-                            transitionBuilder: (child, animation) {
-                              return ScaleTransition(
-                                  scale: animation, child: child);
-                            },
-                            child: _generateText(
-                                key: ValueKey<int>(totalPrice.finalAmount),
-                                context: context,
-                                text: currency.displayAmount(
-                                    amount: totalPrice.finalAmount)))
-                      ],
-                    ),
-                  ))))),
+      child: ClipRRect(
+          borderRadius: borderRadius,
+          child: AnimatedSwitcher(
+              switchInCurve: Curves.easeInOut,
+              switchOutCurve: Curves.easeInOut,
+              duration: animationDuration,
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return SlideTransition(
+                    position: Tween<Offset>(
+                            begin: const Offset(1.0, 0),
+                            end: const Offset(0.0, 0.0))
+                        .animate(animation),
+                    child: child);
+              },
+              child: Opacity(
+                  opacity: cartIsEmpty ? 0 : 1,
+                  key: ValueKey<bool>(cartIsEmpty),
+                  child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      padding: EdgeInsets.only(
+                          left: padding, right: buttonSize + padding),
+                      height: 56.0,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .buttonTheme
+                              .colorScheme!
+                              .background,
+                          borderRadius: borderRadius),
+                      child: IntrinsicWidth(
+                        child: Center(
+                            child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 250),
+                                transitionBuilder: (child, animation) {
+                                  return ScaleTransition(
+                                      scale: animation, child: child);
+                                },
+                                child: _generateText(
+                                    key: ValueKey<int>(totalPrice.finalAmount),
+                                    context: context,
+                                    text: currency.displayAmount(
+                                        amount: totalPrice.finalAmount)))),
+                      ))))),
     );
   }
 
