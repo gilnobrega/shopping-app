@@ -40,7 +40,7 @@ class ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     return AnimatedList(
-      key: key,
+      key: widget.isCheckoutScreen ? key : null,
       initialItemCount: initialCount,
       itemBuilder: builder,
     );

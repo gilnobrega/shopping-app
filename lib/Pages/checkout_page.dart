@@ -43,14 +43,26 @@ class CheckoutPageScreenState extends State<CheckoutPageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("Checkout")),
-        body: ResponsiveLayoutBuilder(
-            child: ItemList(
-          viewDetails: widget.viewDetails,
-          cart: widget.cart,
-          availableItems: widget.cart.itemsInCart,
-          isCheckoutScreen: true,
-          setState: () => setState(() {}),
-        )),
+        body: Stack(
+          children: [
+            ResponsiveLayoutBuilder(
+                child: ItemList(
+              viewDetails: widget.viewDetails,
+              cart: widget.cart,
+              availableItems: widget.cart.itemsInCart,
+              isCheckoutScreen: true,
+              setState: () => setState(() {}),
+            )),
+            AnimatedOpacity(
+              opacity: widget.cart.isEmpty ? 1 : 0,
+              duration: const Duration(milliseconds: 500),
+              child: Center(
+                  child: Text("Your cart is empty 🙁",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline4)),
+            )
+          ],
+        ),
         bottomSheet: ShoppingCartBottomBar(
           totalPrice: widget.cart.getTotalPrice(),
           currency: widget.cart.currency,

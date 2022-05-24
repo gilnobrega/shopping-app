@@ -44,9 +44,7 @@ class ShoppingCartFloatingButton extends StatelessWidget {
                 turns: cartIsEmpty ? 0 : -1,
                 child: FloatingActionButton(
                   heroTag: null,
-                  onPressed: (cartIsEmpty)
-                      ? () => showEmptySnackbar(context)
-                      : onShoppingCartFloatingButtonPressed,
+                  onPressed: onShoppingCartFloatingButtonPressed,
                   tooltip: 'View Cart',
                   child: AnimatedSwitcher(
                       duration: _animationDuration,
@@ -65,16 +63,5 @@ class ShoppingCartFloatingButton extends StatelessWidget {
                 ))),
       ],
     );
-  }
-
-  void showEmptySnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text("Cart is empty"),
-      action: SnackBarAction(
-        textColor: Theme.of(context).primaryColorLight,
-        label: 'Dismiss',
-        onPressed: () {},
-      ),
-    ));
   }
 }
