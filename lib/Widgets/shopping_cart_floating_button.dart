@@ -28,27 +28,14 @@ class ShoppingCartFloatingButton extends StatelessWidget {
       alignment: AlignmentDirectional.centerEnd,
       children: [
         //shows and hides label behind shopping cart button
-        AnimatedSwitcher(
-            switchInCurve: Curves.easeInOut,
-            switchOutCurve: Curves.easeInOut,
-            duration: _animationDuration,
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return SlideTransition(
-                  position: Tween<Offset>(
-                          begin: const Offset(1.0, 0),
-                          end: const Offset(0.0, 0.0))
-                      .animate(animation),
-                  child: child);
-            },
-            child: Opacity(
-                opacity: cartIsEmpty ? 0 : 1,
-                key: ValueKey<bool>(cartIsEmpty),
-                child: ShoppingCartFloatingButtonLabel(
-                  buttonSize: buttonSize,
-                  padding: padding,
-                  currency: currency,
-                  totalPrice: totalPrice,
-                ))),
+        ShoppingCartFloatingButtonLabel(
+          animationDuration: _animationDuration,
+          cartIsEmpty: cartIsEmpty,
+          buttonSize: buttonSize,
+          padding: padding,
+          currency: currency,
+          totalPrice: totalPrice,
+        ),
         Transform.translate(
             offset: const Offset(buttonSize / 2, 0),
             child: Container(
