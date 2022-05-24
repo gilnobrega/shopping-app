@@ -39,7 +39,7 @@ class CheckoutPageScreen extends StatelessWidget {
             tooltip: 'Pay now',
             onPressed: () {},
             heroTag: null,
-            child: Icon(Icons.payment),
+            child: const Icon(Icons.payment),
           ),
         ));
   }

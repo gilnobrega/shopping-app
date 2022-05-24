@@ -3,6 +3,7 @@ import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Models/item_model.dart';
+import 'package:shopping_app/Widgets/item_tile_icon.dart';
 import 'package:shopping_app/Widgets/item_tile_main_body_offer_pill.dart';
 
 class ItemTileMainBody extends StatelessWidget {
@@ -29,9 +30,7 @@ class ItemTileMainBody extends StatelessWidget {
       isThreeLine: offers.isNotEmpty,
       leading: item.pictureUrl == null
           ? const Icon(Icons.question_mark)
-          : Hero(
-              tag: item.pictureUrl ?? "${item.itemId}Picture",
-              child: Image.network(item.pictureUrl!)),
+          : ItemTileIcon(item: item),
       title: Text(
         item.title,
         textScaleFactor: 1.2,

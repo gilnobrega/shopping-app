@@ -60,7 +60,7 @@ class _AvailableItemsPageState extends State<AvailableItemsPage> {
       appBar: AppBar(
         title: (_showSearchBar)
             ? Container(
-                padding: EdgeInsets.symmetric(vertical: 2),
+                padding: const EdgeInsets.symmetric(vertical: 2),
                 child: TextFormField(
                   autofocus: true,
                   onChanged: searchForItems,

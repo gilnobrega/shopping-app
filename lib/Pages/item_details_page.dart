@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
+import 'package:shopping_app/Widgets/item_tile_icon.dart';
 import 'package:shopping_app/Widgets/shopping_cart_floating_button.dart';
 
 class ItemDetailsPage extends Page {
@@ -62,9 +63,9 @@ class ItemDetailsPageScreen extends StatelessWidget {
                   elevation: 8,
                   child: Container(
                       padding: const EdgeInsets.all(16.0),
-                      child: Hero(
-                          tag: item.pictureUrl ?? "${item.itemId}Picture",
-                          child: Image.network(item.pictureUrl ?? "")))),
+                      child: ItemTileIcon(
+                        item: item,
+                      ))),
             ),
             if (item.description != null)
               Card(
