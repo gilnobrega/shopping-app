@@ -43,15 +43,13 @@ class _AvailableItemsPageState extends State<AvailableItemsPage> {
   }
 
   void searchForItems([String searchFor = ""]) {
-    if (searchFor.isEmpty) {
-      availableItems = widget.cart.availableItems;
-      return;
-    }
-
-    availableItems = widget.cart.availableItems
-        .where((item) =>
-            item.title.toLowerCase().startsWith(searchFor.toLowerCase()))
-        .toList();
+    availableItems = searchFor.isEmpty
+        ? widget.cart.availableItems
+        : widget.cart.availableItems
+            .where((item) => item.title
+                .toLowerCase()
+                .contains(searchFor.toLowerCase().trim()))
+            .toList();
 
     setState(() {});
   }
@@ -64,6 +62,7 @@ class _AvailableItemsPageState extends State<AvailableItemsPage> {
             ? Container(
                 padding: EdgeInsets.symmetric(vertical: 2),
                 child: TextFormField(
+                  autofocus: true,
                   onChanged: searchForItems,
                   style: Theme.of(context).primaryTextTheme.titleMedium,
                   decoration: InputDecoration(
@@ -78,7 +77,10 @@ class _AvailableItemsPageState extends State<AvailableItemsPage> {
           //Toggles visibility of search bar
           IconButton(
               onPressed: _toggleSearchBar,
-              icon: Icon((_showSearchBar) ? Icons.close : Icons.search))
+              icon: Icon(
+                (_showSearchBar) ? Icons.close : Icons.search,
+                size: 24.0,
+              ))
         ],
       ),
       body: ListView.builder(
