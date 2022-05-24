@@ -37,10 +37,21 @@ class CheckoutPageScreen extends StatelessWidget {
           tag: "ShoppingCartFloatingButtonHeroTag",
           child: FloatingActionButton(
             tooltip: 'Pay now',
-            onPressed: () {},
+            onPressed: () => executePayment(context),
             heroTag: null,
             child: const Icon(Icons.payment),
           ),
         ));
+  }
+
+  void executePayment(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text("Feature not implemented"),
+      action: SnackBarAction(
+        label: 'Dismiss',
+        textColor: Theme.of(context).primaryColorLight,
+        onPressed: () {},
+      ),
+    ));
   }
 }
