@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
-import 'package:shopping_app/Widgets/ItemTile/item_tile_icon.dart';
+import 'package:shopping_app/Widgets/ItemDetails/item_details.landscape.dart';
+import 'package:shopping_app/Widgets/ItemDetails/item_details_portrait.dart';
 import 'package:shopping_app/Widgets/ShoppingCartFloatingButton/shopping_cart_floating_button.dart';
 
 class ItemDetailsPage extends Page {
@@ -54,27 +55,11 @@ class ItemDetailsPageScreen extends StatelessWidget {
           cartIsEmpty: cart.isEmpty,
         ),
         appBar: AppBar(title: Text(item.title)),
-        body: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: Card(
-                  elevation: 8,
-                  child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ItemTileIcon(
-                        item: item,
-                      ))),
-            ),
-            if (item.description != null)
-              Card(
-                elevation: 8,
-                child: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(item.description!)),
-              )
-          ],
+        body: OrientationBuilder(
+          builder: (context, orientation) =>
+              orientation == Orientation.landscape
+                  ? ItemDetailsLandscape(item: item)
+                  : ItemDetailsPortrait(item: item),
         ));
   }
 }
