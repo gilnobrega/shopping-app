@@ -3,7 +3,6 @@ import 'package:shopping_app/Core/Offers/offer_multibuy.dart';
 import 'package:shopping_app/Core/Offers/offer_none.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
-import 'package:shopping_app/Enums/offer_type.dart';
 import 'package:shopping_app/Models/item_model.dart';
 
 class CartModel {
@@ -87,13 +86,9 @@ class CartModel {
 
     int? offerUnits;
 
-    if (priceFromBestOffer.bestOfferApplied?.offerType ==
-            OfferType.multiBuyFixed ||
-        priceFromBestOffer.bestOfferApplied?.offerType ==
-            OfferType.multiBuyNForN) {
-      OfferMultibuy offer =
-          priceFromBestOffer.bestOfferApplied as OfferMultibuy;
-      offerUnits = offer.offerUnits;
+    if (priceFromBestOffer.bestOfferApplied is OfferMultibuy) {
+      offerUnits =
+          (priceFromBestOffer.bestOfferApplied as OfferMultibuy).offerUnits;
     }
 
     if (offerUnits == null) return priceFromBestOffer;

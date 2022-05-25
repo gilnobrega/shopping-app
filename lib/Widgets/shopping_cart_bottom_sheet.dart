@@ -39,7 +39,7 @@ class ShoppingCartBottomBar extends StatelessWidget {
                   width: double.infinity,
                 ),
                 ItemTilePrice(
-                    appendStringBeginning: "Savings: ",
+                    appendStringBeginning: "Total Discount: ",
                     longFormat: true,
                     price: totalPrice.discountedAmount,
                     currency: currency,

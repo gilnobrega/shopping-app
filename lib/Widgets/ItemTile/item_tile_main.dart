@@ -33,9 +33,7 @@ class ItemTileMainBody extends StatelessWidget {
       isThreeLine: offers.isNotEmpty,
       leading: Container(
           margin: const EdgeInsets.only(right: 24.0),
-          child: item.pictureUrl == null
-              ? const Icon(Icons.question_mark)
-              : ItemTileIcon(item: item)),
+          child: ItemTileIcon(item: item)),
       title: Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
         Container(
             margin: const EdgeInsets.only(right: 8.0),

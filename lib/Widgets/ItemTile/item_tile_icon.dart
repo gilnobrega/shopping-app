@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shopping_app/Models/item_model.dart';
 
 class ItemTileIcon extends StatelessWidget {
@@ -10,6 +10,8 @@ class ItemTileIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hero(
         tag: item.pictureUrl ?? "${item.itemId}Picture",
-        child: Image.network(item.pictureUrl ?? ""));
+        child: item.pictureUrl == null
+            ? const Icon(Icons.question_mark)
+            : Image.network(item.pictureUrl!));
   }
 }
