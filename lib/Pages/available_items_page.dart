@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
+import 'package:shopping_app/Widgets/Actions/search_items_action.dart';
 import 'package:shopping_app/Widgets/item_list.dart';
 import 'package:shopping_app/Widgets/responsive_layout_builder.dart';
 import 'package:shopping_app/Widgets/ShoppingCartFloatingButton/shopping_cart_floating_button.dart';
@@ -75,12 +76,9 @@ class _AvailableItemsPageState extends State<AvailableItemsPage> {
               : Text(widget.title),
           actions: [
             //Toggles visibility of search bar
-            IconButton(
-                onPressed: _toggleSearchBar,
-                icon: Icon(
-                  (_showSearchBar) ? Icons.close : Icons.search,
-                  size: 24.0,
-                ))
+            SearchItemsAction(
+                showSearchBar: _showSearchBar,
+                toggleSearchBar: _toggleSearchBar)
           ],
         ),
         body: ResponsiveLayoutBuilder(

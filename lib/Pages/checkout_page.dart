@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
+import 'package:shopping_app/Widgets/Actions/clear_cart_action.dart';
 import 'package:shopping_app/Widgets/item_list.dart';
 import 'package:shopping_app/Widgets/responsive_layout_builder.dart';
 import 'package:shopping_app/Widgets/shopping_cart_bottom_sheet.dart';
@@ -39,14 +40,24 @@ class CheckoutPageScreen extends StatefulWidget {
 }
 
 class CheckoutPageScreenState extends State<CheckoutPageScreen> {
+  var key = GlobalKey<AnimatedListState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Checkout")),
+        appBar: AppBar(
+          title: const Text("Checkout"),
+          actions: [
+            if (!widget.cart.isEmpty)
+              ClearCartAction(
+                  cart: widget.cart, setState: () => setState(() {}))
+          ],
+        ),
         body: Stack(
           children: [
             ResponsiveLayoutBuilder(
                 child: ItemList(
+              animatedListStateKey: key,
               viewDetails: widget.viewDetails,
               cart: widget.cart,
               availableItems: widget.cart.itemsInCart,

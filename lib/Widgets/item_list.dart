@@ -11,13 +11,15 @@ class ItemList extends StatefulWidget {
       required this.cart,
       required this.availableItems,
       required this.setState,
-      required this.isCheckoutScreen})
+      required this.isCheckoutScreen,
+      this.animatedListStateKey})
       : super(key: key);
   final Function(ItemModel) viewDetails;
   final CartModel cart;
   final List<ItemModel> availableItems;
   final VoidCallback setState;
   final bool isCheckoutScreen;
+  final GlobalKey<AnimatedListState>? animatedListStateKey;
 
   @override
   State<ItemList> createState() => ItemListState();
@@ -26,8 +28,6 @@ class ItemList extends StatefulWidget {
 class ItemListState extends State<ItemList> {
   late int initialCount;
   late List<ItemModel> initialCart;
-
-  final key = GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     return AnimatedList(
-      key: widget.isCheckoutScreen ? key : null,
+      key: widget.isCheckoutScreen ? widget.animatedListStateKey : null,
       initialItemCount: initialCount,
       itemBuilder: builder,
     );
@@ -80,7 +80,7 @@ class ItemListState extends State<ItemList> {
     if (widget.isCheckoutScreen &&
         widget.cart.items.containsKey(itemId) &&
         widget.cart.items[itemId]! == 1) {
-      key.currentState!.removeItem(
+      widget.animatedListStateKey?.currentState?.removeItem(
           index, (context, animation) => builder(context, index, animation));
     }
     widget.cart.removeItem(itemId);
