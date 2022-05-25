@@ -24,5 +24,5 @@ abstract class Offer {
   Price getPrice({int? itemCount}) => Price(
       originalAmount: _calculateOriginalPrice(itemCount: itemCount),
       finalAmount: calculateFinalPrice(itemCount: itemCount),
-      offerApplied: this);
+      offersApplied: [this]);
 }

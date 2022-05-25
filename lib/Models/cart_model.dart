@@ -28,6 +28,10 @@ class CartModel {
       required availableOffers,
       required this.availableItems}) {
     this.availableOffers = _generateOffers(availableOffers);
+
+    //gives priority to Offers of type none
+    this.availableOffers.sort((Offer offer1, Offer offer2) =>
+        (offer1.offerType.index).compareTo(offer2.offerType.index));
   }
 
   //creates at least one Offer.None for each price,
@@ -60,10 +64,6 @@ class CartModel {
 
   //Gets available offers for a specific item
   Iterable<Offer> getOffersForItem({required int itemId}) {
-    //gives priority to Offers of type none
-    availableOffers.sort((Offer offer1, Offer offer2) =>
-        (offer1.offerType.index).compareTo(offer2.offerType.index));
-
     return availableOffers.where((offer) => itemId == offer.itemId);
   }
 
@@ -87,9 +87,12 @@ class CartModel {
 
     int? offerUnits;
 
-    if (priceFromBestOffer.offerApplied?.offerType == OfferType.multiBuyFixed ||
-        priceFromBestOffer.offerApplied?.offerType == OfferType.multiBuyNForN) {
-      OfferMultibuy offer = priceFromBestOffer.offerApplied as OfferMultibuy;
+    if (priceFromBestOffer.bestOfferApplied?.offerType ==
+            OfferType.multiBuyFixed ||
+        priceFromBestOffer.bestOfferApplied?.offerType ==
+            OfferType.multiBuyNForN) {
+      OfferMultibuy offer =
+          priceFromBestOffer.bestOfferApplied as OfferMultibuy;
       offerUnits = offer.offerUnits;
     }
 

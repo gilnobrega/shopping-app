@@ -18,6 +18,7 @@ class ItemTile extends StatelessWidget {
       required this.addItem,
       required this.removeItem,
       required this.viewDetails,
+      required this.isCheckoutScreen,
       required this.offers})
       : super(key: key);
 
@@ -30,6 +31,7 @@ class ItemTile extends StatelessWidget {
   final VoidCallback addItem;
   final VoidCallback removeItem;
   final VoidCallback viewDetails;
+  final bool isCheckoutScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class ItemTile extends StatelessWidget {
         alignment: AlignmentDirectional.center,
         children: [
           ItemTileMainBody(
+            isCheckoutScreen: isCheckoutScreen,
             item: item,
             currency: currency,
             offers: offers

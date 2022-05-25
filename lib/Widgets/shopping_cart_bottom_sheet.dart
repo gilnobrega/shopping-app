@@ -29,9 +29,9 @@ class ShoppingCartBottomBar extends StatelessWidget {
               runSpacing: 0.25,
               children: [
                 ItemTilePrice(
-                    appendString: "Sub Total: ",
+                    appendStringBeginning: "Sub Total: ",
                     longFormat: true,
-                    totalPrice: totalPrice.originalAmount,
+                    price: totalPrice.originalAmount,
                     currency: currency,
                     onlyFade: true,
                     style: Theme.of(context).primaryTextTheme.bodyMedium),
@@ -39,9 +39,9 @@ class ShoppingCartBottomBar extends StatelessWidget {
                   width: double.infinity,
                 ),
                 ItemTilePrice(
-                    appendString: "Savings: ",
+                    appendStringBeginning: "Savings: ",
                     longFormat: true,
-                    totalPrice: totalPrice.discountedAmount,
+                    price: totalPrice.discountedAmount,
                     currency: currency,
                     onlyFade: true,
                     style: Theme.of(context).primaryTextTheme.bodyMedium),
@@ -52,9 +52,9 @@ class ShoppingCartBottomBar extends StatelessWidget {
                           Theme.of(context).buttonTheme.colorScheme!.background,
                     ),
                     child: ItemTilePrice(
-                        appendString: "Total: ",
+                        appendStringBeginning: "Total: ",
                         longFormat: true,
-                        totalPrice: totalPrice.finalAmount,
+                        price: totalPrice.finalAmount,
                         currency: currency,
                         style: Theme.of(context).primaryTextTheme.headline6)),
               ],

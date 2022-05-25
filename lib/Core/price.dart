@@ -3,14 +3,16 @@ import 'package:shopping_app/Core/Offers/offer.dart';
 class Price {
   final int originalAmount;
   final int finalAmount;
-  final Offer? offerApplied;
+  //offers that were applied to get discount
+  final List<Offer>? offersApplied;
+  Offer? get bestOfferApplied => offersApplied?.last;
 
   int get discountedAmount => originalAmount - finalAmount;
 
   Price(
       {required this.originalAmount,
       required this.finalAmount,
-      this.offerApplied}) {
+      this.offersApplied}) {
     if (originalAmount < 0) {
       throw Exception("Original amount $originalAmount cannot be negative");
     }
@@ -29,6 +31,9 @@ class Price {
     return Price(
         finalAmount: finalAmount + otherPrice.finalAmount,
         originalAmount: originalAmount + otherPrice.originalAmount,
-        offerApplied: offerApplied);
+        offersApplied: {
+          ...(otherPrice.offersApplied ?? []),
+          ...(offersApplied ?? [])
+        }.toList());
   }
 }
