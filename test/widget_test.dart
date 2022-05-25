@@ -180,8 +180,15 @@ void main() {
     await tester.tap(find.text("Butter"));
     await tester.pumpAndSettle();
 
-    //expects app bar title to be butter and lorem ipsum description
+    //tests landscape mode
+    //expects to have a title 'Butter', and also app bar title to be butter and lorem ipsum description
     expect(find.text("Butter"), findsNWidgets(2));
     expect(find.textContaining("Lorem ipsum dolor "), findsOneWidget);
+
+    //tests portrait mode
+    tester.binding.window.physicalSizeTestValue = const Size(1080, 1920);
+    await tester.pumpAndSettle();
+
+    expect(find.text("Butter"), findsOneWidget);
   });
 }
