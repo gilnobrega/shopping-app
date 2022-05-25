@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class CounterTransition {
   static Widget transitionBuilder(
-      Widget child, Animation<double> animation, int newValue, int oldValue) {
+      Widget child, Animation<double> animation, int newValue, int oldValue,
+      [bool onlyFade = false]) {
+    if (onlyFade) return FadeTransition(opacity: animation, child: child);
+
     if (newValue == oldValue) {
       return ScaleTransition(scale: animation, child: child);
     }
+
     //Slides up if price increases
     //Otherwise slides down
     return _slideAnimation(child, animation, newValue > oldValue);

@@ -7,8 +7,10 @@ class ItemTilePrice extends StatelessWidget {
     Key? key,
     required this.currency,
     required this.totalPrice,
-    required this.pricePerUnit,
+    this.pricePerUnit = 0,
+    this.longFormat = false,
     this.appendString = "",
+    this.onlyFade = false,
     this.style,
   }) : super(key: key);
 
@@ -17,19 +19,22 @@ class ItemTilePrice extends StatelessWidget {
   final int pricePerUnit;
   final TextStyle? style;
   final String appendString;
+  final bool longFormat;
+  final bool onlyFade;
 
   @override
   Widget build(BuildContext context) {
     var price = totalPrice == 0 ? pricePerUnit : totalPrice;
 
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 250),
       transitionBuilder: (child, animation) =>
-          CounterTransition.transitionBuilder(
-              child, animation, price, (child.key as ValueKey<int>).value),
+          CounterTransition.transitionBuilder(child, animation, price,
+              (child.key as ValueKey<int>).value, onlyFade),
       child: Text(
         key: ValueKey<int>(price),
-        appendString + currency.displayAmount(amount: price),
+        appendString +
+            currency.displayAmount(amount: price, longFormat: longFormat),
         style: style,
       ),
     );

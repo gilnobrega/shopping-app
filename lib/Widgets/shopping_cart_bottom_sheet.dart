@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
+import 'package:shopping_app/Widgets/ItemTile/item_tile_price.dart';
 
 class ShoppingCartBottomBar extends StatelessWidget {
   const ShoppingCartBottomBar(
@@ -10,7 +11,7 @@ class ShoppingCartBottomBar extends StatelessWidget {
   final Price totalPrice;
   final Currency currency;
 
-  static const _barHeight = 56.0;
+  static const _barHeight = 96.0;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,39 @@ class ShoppingCartBottomBar extends StatelessWidget {
             ),
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.only(left: 16.0),
-            child: Text(
-                'Total: ${currency.displayAmount(amount: totalPrice.finalAmount, longFormat: true)}',
-                style: Theme.of(context).primaryTextTheme.headline6)));
+            child: Wrap(
+              runSpacing: 0.25,
+              children: [
+                ItemTilePrice(
+                    appendString: "Sub Total: ",
+                    longFormat: true,
+                    totalPrice: totalPrice.originalAmount,
+                    currency: currency,
+                    onlyFade: true,
+                    style: Theme.of(context).primaryTextTheme.bodyMedium),
+                const SizedBox(
+                  width: double.infinity,
+                ),
+                ItemTilePrice(
+                    appendString: "Savings: ",
+                    longFormat: true,
+                    totalPrice: totalPrice.discountedAmount,
+                    currency: currency,
+                    onlyFade: true,
+                    style: Theme.of(context).primaryTextTheme.bodyMedium),
+                const SizedBox(width: double.infinity, height: 4.0),
+                Container(
+                    decoration: BoxDecoration(
+                      color:
+                          Theme.of(context).buttonTheme.colorScheme!.background,
+                    ),
+                    child: ItemTilePrice(
+                        appendString: "Total: ",
+                        longFormat: true,
+                        totalPrice: totalPrice.finalAmount,
+                        currency: currency,
+                        style: Theme.of(context).primaryTextTheme.headline6)),
+              ],
+            )));
   }
 }
