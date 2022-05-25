@@ -26,12 +26,10 @@ class ItemList extends StatefulWidget {
 }
 
 class ItemListState extends State<ItemList> {
-  late int initialCount;
   late List<ItemModel> initialCart;
 
   @override
   void initState() {
-    initialCount = widget.availableItems.length;
     initialCart = widget.availableItems;
 
     super.initState();
@@ -41,8 +39,8 @@ class ItemListState extends State<ItemList> {
   Widget build(BuildContext context) {
     if (widget.isCheckoutScreen) {
       return AnimatedList(
-        key: widget.isCheckoutScreen ? widget.animatedListStateKey : null,
-        initialItemCount: initialCount,
+        key: widget.animatedListStateKey,
+        initialItemCount: widget.availableItems.length,
         itemBuilder: builder,
       );
     }
@@ -61,9 +59,9 @@ class ItemListState extends State<ItemList> {
   }
 
   Widget _listTileBuilder(BuildContext context, int index) {
-    ItemModel item = widget.isCheckoutScreen
-        ? initialCart[index]
-        : widget.availableItems[index];
+    ItemModel item = widget.availableItems.length > index
+        ? widget.availableItems[index]
+        : initialCart[index];
     List<Offer> offers =
         widget.cart.getOffersForItem(itemId: item.itemId).toList();
 
@@ -77,7 +75,7 @@ class ItemListState extends State<ItemList> {
         count: widget.cart.items[item.itemId] ?? 0,
         offers: offers,
         addItem: () => addItem(item.itemId),
-        removeItem: () => removeItem(index, item.itemId),
+        removeItem: () => removeItem(item),
         viewDetails: () {
           widget.viewDetails(item);
         });
@@ -88,14 +86,18 @@ class ItemListState extends State<ItemList> {
     widget.setState();
   }
 
-  void removeItem(int index, int itemId) {
+  void removeItem(ItemModel item) {
     if (widget.isCheckoutScreen &&
-        widget.cart.items.containsKey(itemId) &&
-        widget.cart.items[itemId]! == 1) {
+        widget.cart.items.containsKey(item.itemId) &&
+        widget.cart.items[item.itemId]! == 1) {
+      int index = widget.availableItems.indexOf(item);
+
       widget.animatedListStateKey?.currentState?.removeItem(
           index, (context, animation) => builder(context, index, animation));
     }
-    widget.cart.removeItem(itemId);
+    widget.cart.removeItem(item.itemId);
     widget.setState();
+
+    initialCart = widget.availableItems;
   }
 }
