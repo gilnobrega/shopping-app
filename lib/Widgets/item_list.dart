@@ -39,36 +39,47 @@ class ItemListState extends State<ItemList> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedList(
-      key: widget.isCheckoutScreen ? widget.animatedListStateKey : null,
-      initialItemCount: initialCount,
-      itemBuilder: builder,
-    );
+    if (widget.isCheckoutScreen) {
+      return AnimatedList(
+        key: widget.isCheckoutScreen ? widget.animatedListStateKey : null,
+        initialItemCount: initialCount,
+        itemBuilder: builder,
+      );
+    }
+
+    return ListView.builder(
+        itemCount: widget.availableItems.length, itemBuilder: _listTileBuilder);
   }
 
   Widget builder(BuildContext context, int index, Animation<double> animation) {
-    ItemModel item = initialCart[index];
-    List<Offer> offers =
-        widget.cart.getOffersForItem(itemId: item.itemId).toList();
-
     return ClipRect(
         child: SlideTransition(
             position: Tween<Offset>(
                     begin: const Offset(-1.0, 0), end: const Offset(0, 0))
                 .animate(animation),
-            child: ItemTile(
-                item: item,
-                currency: widget.cart.currency,
-                pricePerUnit: widget.cart
-                    .getPriceForItem(itemId: item.itemId, itemCount: 1),
-                totalPrice: widget.cart.getPriceForItem(itemId: item.itemId),
-                count: widget.cart.items[item.itemId] ?? 0,
-                offers: offers,
-                addItem: () => addItem(item.itemId),
-                removeItem: () => removeItem(index, item.itemId),
-                viewDetails: () {
-                  widget.viewDetails(item);
-                })));
+            child: _listTileBuilder(context, index)));
+  }
+
+  Widget _listTileBuilder(BuildContext context, int index) {
+    ItemModel item = widget.isCheckoutScreen
+        ? initialCart[index]
+        : widget.availableItems[index];
+    List<Offer> offers =
+        widget.cart.getOffersForItem(itemId: item.itemId).toList();
+
+    return ItemTile(
+        item: item,
+        currency: widget.cart.currency,
+        pricePerUnit:
+            widget.cart.getPriceForItem(itemId: item.itemId, itemCount: 1),
+        totalPrice: widget.cart.getPriceForItem(itemId: item.itemId),
+        count: widget.cart.items[item.itemId] ?? 0,
+        offers: offers,
+        addItem: () => addItem(item.itemId),
+        removeItem: () => removeItem(index, item.itemId),
+        viewDetails: () {
+          widget.viewDetails(item);
+        });
   }
 
   void addItem(int itemId) {
