@@ -63,21 +63,6 @@ void main() {
     expect(() => cart.removeItem(item1.itemId), throwsA(isA<Exception>()));
   });
 
-  test("Get Price for Item in Cart with Multiple Offers", () {
-    //Adds second item
-    cart.addItem(item3.itemId);
-    expect(cart.getPriceForItem(itemId: item3.itemId).finalAmount, 180);
-
-    cart.addItem(item3.itemId);
-    expect(cart.getPriceForItem(itemId: item3.itemId).finalAmount, 360);
-
-    cart.addItem(item3.itemId);
-    expect(cart.getPriceForItem(itemId: item3.itemId).finalAmount, 390);
-
-    cart.addItem(item3.itemId);
-    expect(cart.getPriceForItem(itemId: item3.itemId).finalAmount, 570);
-  });
-
   test("Clear Cart", () {
     cart.addItem(item2.itemId);
 
@@ -111,5 +96,43 @@ void main() {
 
     cart.addItem(item1.itemId);
     expect(cart.getTotalPrice().finalAmount, 660);
+  });
+
+  test("Get Price for Item in Cart with Multiple Offers", () {
+    cart.clearCart();
+    //Adds second item
+    cart.addItem(item3.itemId);
+    expect(cart.getPriceForItem(itemId: item3.itemId).finalAmount, 180);
+    //prefer single discount offer
+    expect(cart.getPriceForItem(itemId: item3.itemId).bestOfferApplied, offer4);
+    //only expect that offer to be applied
+    expect(
+        cart.getPriceForItem(itemId: item3.itemId).offersApplied?.length ?? 0,
+        1);
+
+    cart.addItem(item3.itemId);
+    expect(cart.getPriceForItem(itemId: item3.itemId).finalAmount, 360);
+    expect(cart.getPriceForItem(itemId: item3.itemId).bestOfferApplied, offer4);
+    expect(
+        cart.getPriceForItem(itemId: item3.itemId).offersApplied?.length ?? 0,
+        1);
+
+    cart.addItem(item3.itemId);
+    expect(cart.getPriceForItem(itemId: item3.itemId).finalAmount, 390);
+    //prefer nforn offer
+    expect(cart.getPriceForItem(itemId: item3.itemId).bestOfferApplied, offer3);
+    //only apply nforn offer
+    expect(
+        cart.getPriceForItem(itemId: item3.itemId).offersApplied?.length ?? 0,
+        1);
+
+    cart.addItem(item3.itemId);
+    expect(cart.getPriceForItem(itemId: item3.itemId).finalAmount, 570);
+    //prefer nforn offer
+    expect(cart.getPriceForItem(itemId: item3.itemId).bestOfferApplied, offer3);
+    //apply nforn offer for first 3 items and single discount for fourth
+    expect(
+        cart.getPriceForItem(itemId: item3.itemId).offersApplied?.length ?? 0,
+        2);
   });
 }
