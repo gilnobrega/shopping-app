@@ -58,8 +58,11 @@ class _ShoppingAppState extends State<ShoppingApp> {
         onPopPage: (route, result) {
           if (!route.didPop(result)) return false;
           setState(() {
-            _currentItem = null;
-            _showCheckoutPage = false;
+            if (_currentItem != null) {
+              _currentItem = null;
+            } else {
+              _showCheckoutPage = false;
+            }
           });
 
           return true;
