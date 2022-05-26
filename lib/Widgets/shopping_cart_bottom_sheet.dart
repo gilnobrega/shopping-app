@@ -29,7 +29,7 @@ class ShoppingCartBottomBar extends StatelessWidget {
               runSpacing: 0.25,
               children: [
                 ItemTilePrice(
-                    appendStringBeginning: "Sub Total: ",
+                    appendStringBeginning: "Sub Total to pay: ",
                     longFormat: true,
                     price: totalPrice.originalAmount,
                     currency: currency,
@@ -52,7 +52,7 @@ class ShoppingCartBottomBar extends StatelessWidget {
                           Theme.of(context).buttonTheme.colorScheme!.background,
                     ),
                     child: ItemTilePrice(
-                        appendStringBeginning: "Total: ",
+                        appendStringBeginning: "Total to pay: ",
                         longFormat: true,
                         price: totalPrice.finalAmount,
                         currency: currency,

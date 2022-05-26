@@ -129,9 +129,9 @@ void main() {
     expect(find.byIcon(Icons.payment), findsOneWidget);
     expect(find.byIcon(Icons.shopping_cart_outlined), findsNothing);
     expect(find.byIcon(Icons.shopping_cart), findsNothing);
-    expect(find.text('Total: GBP 0.00'), findsOneWidget);
+    expect(find.text('Total to pay: GBP 0.00'), findsOneWidget);
     expect(find.text('Total Discount: GBP 0.00'), findsOneWidget);
-    expect(find.text('Sub Total: GBP 0.00'), findsOneWidget);
+    expect(find.text('Sub Total to pay: GBP 0.00'), findsOneWidget);
     expect(find.text('Your cart is empty 🙁'), findsOneWidget);
   });
 
@@ -160,9 +160,9 @@ void main() {
     expect(find.byIcon(Icons.payment), findsOneWidget);
     expect(find.byIcon(Icons.shopping_cart_outlined), findsNothing);
     expect(find.byIcon(Icons.shopping_cart), findsNothing);
-    expect(find.text('Total: GBP 4.00'), findsOneWidget);
+    expect(find.text('Total to pay: GBP 4.00'), findsOneWidget);
     expect(find.text('Total Discount: GBP 1.00'), findsOneWidget);
-    expect(find.text('Sub Total: GBP 5.00'), findsOneWidget);
+    expect(find.text('Sub Total to pay: GBP 5.00'), findsOneWidget);
     expect(find.text('Face Mask'), findsOneWidget);
   });
 

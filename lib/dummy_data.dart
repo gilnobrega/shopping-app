@@ -55,7 +55,7 @@ CartModel generateDummyCart() {
   Offer offer1 = OfferMultibuyFixed(
       offerUnits: 2, offerAmount: 400, itemId: 1, originalUnitPrice: 250);
   Offer offer2 = OfferMultibuyNForN(
-      offerUnits: 4, forUnits: 3, itemId: 2, originalUnitPrice: 65);
+      offerUnits: 6, forUnits: 5, itemId: 2, originalUnitPrice: 65);
   Offer offer3 = OfferNone(itemId: 3, originalUnitPrice: 195);
   Offer offer4 =
       OfferSingle(itemId: 4, discountedAmount: 15, originalUnitPrice: 195);
