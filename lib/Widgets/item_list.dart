@@ -66,6 +66,8 @@ class ItemListState extends State<ItemList> {
         widget.cart.getOffersForItem(itemId: item.itemId).toList();
 
     return ItemTile(
+        cart: widget.cart,
+        setState: () => widget.setState(),
         isCheckoutScreen: widget.isCheckoutScreen,
         item: item,
         currency: widget.cart.currency,

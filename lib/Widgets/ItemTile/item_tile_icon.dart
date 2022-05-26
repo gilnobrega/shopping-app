@@ -10,8 +10,10 @@ class ItemTileIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hero(
         tag: item.pictureUrl ?? "${item.itemId}Picture",
-        child: item.pictureUrl == null
-            ? const Icon(Icons.question_mark)
-            : Image.network(item.pictureUrl!));
+        child: AspectRatio(
+            aspectRatio: 1,
+            child: item.pictureUrl == null
+                ? const Icon(Icons.question_mark)
+                : Image.network(item.pictureUrl!)));
   }
 }

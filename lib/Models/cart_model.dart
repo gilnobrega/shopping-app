@@ -47,8 +47,8 @@ class CartModel {
   }
 
   //increments number of items with this itemid
-  void addItem(int itemId) {
-    items[itemId] = (items[itemId] ?? 0) + 1;
+  void addItem(int itemId, [int number = 1]) {
+    items[itemId] = (items[itemId] ?? 0) + number;
   }
 
   //decreases counter of number of items with this itemid

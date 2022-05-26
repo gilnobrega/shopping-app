@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
+import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
 import 'package:shopping_app/Widgets/ItemTile/item_tile_icon.dart';
 import 'package:shopping_app/Widgets/ItemTile/item_tile_main_body_offer_pill.dart';
@@ -16,7 +17,9 @@ class ItemTileMainBody extends StatelessWidget {
       required this.pricePerUnit,
       required this.totalPrice,
       required this.viewDetails,
-      required this.isCheckoutScreen})
+      required this.isCheckoutScreen,
+      required this.cart,
+      required this.setState})
       : super(key: key);
 
   final List<Offer> offers;
@@ -25,7 +28,9 @@ class ItemTileMainBody extends StatelessWidget {
   final Price pricePerUnit;
   final Price totalPrice;
   final VoidCallback viewDetails;
+  final VoidCallback setState;
   final bool isCheckoutScreen;
+  final CartModel cart;
 
   @override
   Widget build(BuildContext context) {
@@ -60,14 +65,17 @@ class ItemTileMainBody extends StatelessWidget {
         alignment: WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
+          const SizedBox(width: double.infinity, height: 4.0),
           ...offers.map((offer) => ItemTileMainBodyOfferPill(
+                setState: setState,
+                cart: cart,
                 offerIsApplied: totalPrice.finalAmount != 0 &&
                     (totalPrice.offersApplied?.contains(offer) ?? false),
                 offer: offer,
                 currency: currency,
               )),
           if (isCheckoutScreen && offers.isNotEmpty) ...[
-            if (offers.length > 1) const SizedBox(width: double.infinity),
+            const SizedBox(width: double.infinity, height: 4.0),
             Container(
                 padding: const EdgeInsets.only(left: 4),
                 child: ItemTilePrice(

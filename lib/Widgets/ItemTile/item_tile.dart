@@ -3,6 +3,7 @@ import 'package:shopping_app/Core/Offers/offer.dart';
 import 'package:shopping_app/Core/currency.dart';
 import 'package:shopping_app/Core/price.dart';
 import 'package:shopping_app/Enums/offer_type.dart';
+import 'package:shopping_app/Models/cart_model.dart';
 import 'package:shopping_app/Models/item_model.dart';
 import 'package:shopping_app/Widgets/ItemTile/item_tile_buttons.dart';
 import 'package:shopping_app/Widgets/ItemTile/item_tile_main.dart';
@@ -19,7 +20,9 @@ class ItemTile extends StatelessWidget {
       required this.removeItem,
       required this.viewDetails,
       required this.isCheckoutScreen,
-      required this.offers})
+      required this.cart,
+      required this.offers,
+      required this.setState})
       : super(key: key);
 
   final ItemModel item;
@@ -32,6 +35,8 @@ class ItemTile extends StatelessWidget {
   final VoidCallback removeItem;
   final VoidCallback viewDetails;
   final bool isCheckoutScreen;
+  final VoidCallback setState;
+  final CartModel cart;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,8 @@ class ItemTile extends StatelessWidget {
         alignment: AlignmentDirectional.center,
         children: [
           ItemTileMainBody(
+            setState: setState,
+            cart: cart,
             isCheckoutScreen: isCheckoutScreen,
             item: item,
             currency: currency,
